@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Users, CreditCard, TrendingUp, Eye, Edit, Trash2, Phone, Mail, Clock, CheckCircle, XCircle, AlertCircle, Filter, Search, Download, RefreshCw } from 'lucide-react';
+import { Calendar, Users, CreditCard, TrendingUp, Eye, Edit, Trash2, Phone, Mail, Clock, CheckCircle, XCircle, AlertCircle, Filter, Search, Download, RefreshCw, BarChart3 } from 'lucide-react';
 import { supabase, rendezVousService, paymentService, subscribeToRendezVous, subscribeToPayments, RendezVous, Payment } from '../lib/supabase';
+import { notificationService } from '../lib/notifications';
+import AnalyticsDashboard from './AnalyticsDashboard';
 
 const AdminDashboard: React.FC = () => {
   const [rendezVous, setRendezVous] = useState<RendezVous[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'rendezvous' | 'payments'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'rendezvous' | 'payments' | 'analytics'>('overview');
   const [selectedRendezVous, setSelectedRendezVous] = useState<RendezVous | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -77,7 +79,14 @@ const AdminDashboard: React.FC = () => {
 
   const updateRendezVousStatus = async (id: string, status: RendezVous['status']) => {
     try {
+      const rdv = rendezVous.find(r => r.id === id);
       await rendezVousService.update(id, { status });
+      
+      // Schedule status update notification
+      if (rdv && rdv.email) {
+        await notificationService.scheduleStatusUpdate(id, rdv.nom, status);
+      }
+      
       loadRendezVous();
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
@@ -183,7 +192,8 @@ const AdminDashboard: React.FC = () => {
           {[
             { id: 'overview', label: 'Vue d\'ensemble', icon: TrendingUp },
             { id: 'rendezvous', label: 'Rendez-vous', icon: Calendar },
-            { id: 'payments', label: 'Paiements', icon: CreditCard }
+            { id: 'payments', label: 'Paiements', icon: CreditCard },
+            { id: 'analytics', label: 'Rapports', icon: BarChart3 }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -467,6 +477,11 @@ const AdminDashboard: React.FC = () => {
               )}
             </div>
           </div>
+        )}
+
+        {/* Analytics Tab */}
+        {activeTab === 'analytics' && (
+          <AnalyticsDashboard />
         )}
 
         {/* Gestion des paiements */}

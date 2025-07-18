@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone, MapPin, Clock, Wrench } from 'lucide-react';
+import { Menu, X, Phone, MapPin, Clock, User, LogOut } from 'lucide-react';
+import { AuthUser } from '../lib/auth';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  user: AuthUser | null;
+  onShowAuth: () => void;
+  onSignOut: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const navItems = [
     { href: '#accueil', label: 'Accueil' },
@@ -73,12 +81,54 @@ const Header: React.FC = () => {
 
             {/* CTA Button */}
             <div className="hidden md:block">
-              <a
-                href="#contact"
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-              >
-                Prendre RDV
-              </a>
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>{user.profile?.nom || user.email}</span>
+                  </button>
+                  
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                      <Link
+                        to="/dashboard"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-t-lg"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        Mon espace client
+                      </Link>
+                      <button
+                        onClick={() => {
+                          onSignOut();
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 rounded-b-lg flex items-center"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Déconnexion
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex space-x-3">
+                  <button
+                    onClick={onShowAuth}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                  >
+                    Connexion
+                  </button>
+                  <a
+                    href="#contact"
+                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    Prendre RDV
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -103,12 +153,46 @@ const Header: React.FC = () => {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                className="block mt-4 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
-              >
-                Prendre RDV
-              </a>
+              
+              {user ? (
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <Link
+                    to="/dashboard"
+                    className="block py-2 text-gray-700 hover:text-red-600 font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Mon espace client
+                  </Link>
+                  <button
+                    onClick={() => {
+                      onSignOut();
+                      setIsMenuOpen(false);
+                    }}
+                    className="block py-2 text-gray-700 hover:text-red-600 font-medium w-full text-left"
+                  >
+                    Déconnexion
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
+                  <button
+                    onClick={() => {
+                      onShowAuth();
+                      setIsMenuOpen(false);
+                    }}
+                    className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold text-center transition-colors"
+                  >
+                    Connexion
+                  </button>
+                  <a
+                    href="#contact"
+                    className="block mt-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Prendre RDV
+                  </a>
+                </div>
+              )}
             </nav>
           )}
         </div>
