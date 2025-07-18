@@ -298,12 +298,11 @@ const Blog: React.FC = () => {
 
         <div className="text-center mt-12">
           <button className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
-                    onClick={() => handleReadMore(post.id)}
             Voir tous les articles
           </button>
         </div>
+      </div>
       </section>
-    </section>
       {/* Modal pour l'article complet */}
       {selectedArticle && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
