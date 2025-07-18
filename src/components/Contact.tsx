@@ -379,10 +379,10 @@ const Contact: React.FC = () => {
                 
                 {/* Affichage du prix du service */}
                 {formData.service && getServicePrice(formData.service) && (
-                  <div className="mt-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="mt-3 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-blue-700">Prix du service :</span>
-                      <span className="font-bold text-blue-800">
+                      <span className="text-sm text-red-700">Prix du service :</span>
+                      <span className="font-bold text-red-800">
                         {getServicePrice(formData.service)?.price === 0 
                           ? 'Sur devis' 
                           : `${getServicePrice(formData.service)?.price.toLocaleString()} FCFA`
@@ -391,7 +391,7 @@ const Contact: React.FC = () => {
                     </div>
                     {getServicePrice(formData.service)?.price > 0 && (
                       <div className="mt-3 space-y-2">
-                        <p className="text-xs text-blue-600">Options de paiement :</p>
+                        <p className="text-xs text-red-600">Options de paiement :</p>
                         <div className="flex space-x-4">
                           <label className="flex items-center">
                             <input
@@ -402,7 +402,7 @@ const Contact: React.FC = () => {
                               onChange={(e) => setPaymentOption(e.target.value as 'later' | 'now')}
                               className="mr-2"
                             />
-                            <span className="text-sm text-blue-700">Payer sur place</span>
+                            <span className="text-sm text-red-700">Payer sur place</span>
                           </label>
                           <label className="flex items-center">
                             <input
@@ -413,7 +413,7 @@ const Contact: React.FC = () => {
                               onChange={(e) => setPaymentOption(e.target.value as 'later' | 'now')}
                               className="mr-2"
                             />
-                            <span className="text-sm text-blue-700">Payer maintenant (-5%)</span>
+                            <span className="text-sm text-red-700">Payer maintenant (-5%)</span>
                           </label>
                         </div>
                       </div>
