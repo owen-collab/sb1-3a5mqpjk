@@ -33,6 +33,13 @@ export interface Payment {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// Vérification des variables d'environnement
+if (!supabaseUrl || !supabaseKey) {
+  console.error('❌ Variables d\'environnement Supabase manquantes:');
+  console.error('VITE_SUPABASE_URL:', supabaseUrl ? '✅ Défini' : '❌ Manquant');
+  console.error('VITE_SUPABASE_ANON_KEY:', supabaseKey ? '✅ Défini' : '❌ Manquant');
+}
+
 export const supabase = supabaseUrl && supabaseKey 
   ? createClient(supabaseUrl, supabaseKey)
   : null;

@@ -21,32 +21,54 @@ export const authService = {
   async signUp(email: string, password: string, userData: { nom: string; telephone: string }) {
     if (!supabase) throw new Error('Supabase non configuré');
     
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          nom: userData.nom,
-          telephone: userData.telephone
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            nom: userData.nom,
+            telephone: userData.telephone
+          }
         }
+      });
+      
+      if (error) throw error;
+      
+      // Vérifier si l'utilisateur a été créé
+      if (!data.user) {
+        throw new Error('Erreur lors de la création du compte utilisateur');
       }
-    });
-    
-    if (error) throw error;
-    return data;
+      
+      return data;
+    } catch (error: any) {
+      console.error('Erreur lors de l\'inscription:', error);
+      throw error;
+    }
   },
 
   // Sign in with email and password
   async signIn(email: string, password: string) {
     if (!supabase) throw new Error('Supabase non configuré');
     
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-    
-    if (error) throw error;
-    return data;
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (error) throw error;
+      
+      // Vérifier si la connexion a réussi
+      if (!data.user) {
+        throw new Error('Erreur lors de la connexion');
+      }
+      
+      return data;
+    } catch (error: any) {
+      console.error('Erreur lors de la connexion:', error);
+      throw error;
+    }
   },
 
   // Sign out

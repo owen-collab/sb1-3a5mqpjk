@@ -27,6 +27,34 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
     setError('');
     setSuccess('');
 
+    // Validation des champs
+    if (!formData.email || !formData.password) {
+      setError('Veuillez remplir tous les champs obligatoires');
+      setIsLoading(false);
+      return;
+    }
+
+    if (mode === 'signup' && (!formData.nom || !formData.telephone)) {
+      setError('Veuillez remplir tous les champs obligatoires');
+      setIsLoading(false);
+      return;
+    }
+
+    // Validation de l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Veuillez entrer une adresse email valide');
+      setIsLoading(false);
+      return;
+    }
+
+    // Validation du mot de passe
+    if (formData.password.length < 6) {
+      setError('Le mot de passe doit contenir au moins 6 caractères');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       if (mode === 'signup') {
         await authService.signUp(formData.email, formData.password, {
@@ -35,16 +63,51 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
         });
         setSuccess('Compte créé avec succès ! Vous pouvez maintenant vous connecter.');
         setMode('signin');
+        // Réinitialiser le formulaire après inscription réussie
+        setFormData({
+          email: formData.email, // Garder l'email pour faciliter la connexion
+          password: '',
+          nom: '',
+          telephone: ''
+        });
       } else {
         await authService.signIn(formData.email, formData.password);
         setSuccess('Connexion réussie !');
         setTimeout(() => {
           onAuthSuccess();
           onClose();
+          // Réinitialiser le formulaire
+          setFormData({
+            email: '',
+            password: '',
+            nom: '',
+            telephone: ''
+          });
         }, 1000);
       }
     } catch (err: any) {
-      setError(err.message || 'Une erreur est survenue');
+      console.error('Erreur d\'authentification:', err);
+      
+      // Messages d'erreur plus explicites
+      let errorMessage = 'Une erreur est survenue';
+      
+      if (err.message) {
+        if (err.message.includes('Invalid login credentials')) {
+          errorMessage = 'Email ou mot de passe incorrect';
+        } else if (err.message.includes('User already registered')) {
+          errorMessage = 'Un compte existe déjà avec cette adresse email';
+        } else if (err.message.includes('Email not confirmed')) {
+          errorMessage = 'Veuillez confirmer votre email avant de vous connecter';
+        } else if (err.message.includes('Database error')) {
+          errorMessage = 'Erreur de base de données. Veuillez vérifier votre configuration Supabase.';
+        } else if (err.message.includes('Failed to fetch')) {
+          errorMessage = 'Impossible de se connecter au serveur. Vérifiez votre connexion internet.';
+        } else {
+          errorMessage = err.message;
+        }
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +176,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
           {error && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
               <AlertCircle className="h-5 w-5 text-red-500 mr-3" />
-              <span className="text-red-700 text-sm">{error}</span>
+              <div className="flex-1">
+                <span className="text-red-700 text-sm">{error}</span>
+                {error.includes('configuration Supabase') && (
+                  <div className="mt-2 text-xs text-red-600">
+                    <p>• Vérifiez votre fichier .env</p>
+                    <p>• Redémarrez le serveur de développement</p>
+                    <p>• Consultez la page /debug pour plus d'informations</p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
