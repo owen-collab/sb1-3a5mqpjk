@@ -153,7 +153,7 @@ const Chatbot: React.FC = () => {
       const userGreeting = context.userName ? context.userName : 'à vous';
       simulateTyping(() => {
         addBotMessage(
-          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${userGreeting} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
+          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${userGreeting} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd\'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
             "Vos tarifs",
             "Où êtes-vous ?",
             "Juste des infos"
@@ -163,7 +163,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('prix') || message.includes('tarif') || message.includes('coût') || message.includes('combien') || message.includes('ça coûte')) {
       simulateTyping(() => {
         addBotMessage(
-          `${getPersonalizedGreeting()} Nos tarifs sont transparents et compétitifs ! ${getRandomEmoji('positive')}\n\n💎 **TARIFS OFFICIELS IN AUTO** :\n\n• **Diagnostic électronique** : 15 000 FCFA\n• **Vidange complète** : 35 000 FCFA\n• **Service climatisation** : 25 000 FCFA\n• **Système de freinage** : 45 000 FCFA\n• **Pneus + géométrie** : 15 000 FCFA\n• **Révision complète** : 75 000 FCFA\n\n🛡️ **INCLUS DANS TOUS NOS PRIX** :\n• Garantie 6 mois pièces et main d'œuvre\n• Devis gratuit et détaillé\n• Diagnostic préliminaire offert\n• Conseils personnalisés\n\n💡 **OFFRES SPÉCIALES** :\n• Forfait entretien annuel : -20%\n• Diagnostic gratuit pour nouveaux clients\n• Réduction fidélité après 3 services\n\nQuel service vous intéresse pour un devis précis ?",
+          \`${getPersonalizedGreeting()} Nos tarifs sont transparents et compétitifs ! ${getRandomEmoji('positive')}\n\n💎 **TARIFS OFFICIELS IN AUTO** :\n\n• **Diagnostic électronique** : 15 000 FCFA\n• **Vidange complète** : 35 000 FCFA\n• **Service climatisation** : 25 000 FCFA\n• **Système de freinage** : 45 000 FCFA\n• **Pneus + géométrie** : 15 000 FCFA\n• **Révision complète** : 75 000 FCFA\n\n🛡️ **INCLUS DANS TOUS NOS PRIX** :\n• Garantie 6 mois pièces et main d'œuvre\n• Devis gratuit et détaillé\n• Diagnostic préliminaire offert\n• Conseils personnalisés\n\n💡 **OFFRES SPÉCIALES** :\n• Forfait entretien annuel : -20%\n• Diagnostic gratuit pour nouveaux clients\n• Réduction fidélité après 3 services\n\nQuel service vous intéresse pour un devis précis ?",
           [
             "Devis personnalisé",
             "Diagnostic gratuit",
@@ -193,7 +193,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('où') || message.includes('adresse') || message.includes('localisation') || message.includes('situé') || message.includes('comment venir')) {
       simulateTyping(() => {
         addBotMessage(
-          `Nous sommes très faciles à trouver ! ${getRandomEmoji('positive')}\n\n📍 **ADRESSE EXACTE** :\n🏢 **IN AUTO**\n📍 Rue PAU, Akwa\n🎯 **Repère principal** : En face d'AGROMAC\n🏪 À côté de la microfinance FIGEC\n🌍 Douala, Cameroun\n\n🚗 **ACCÈS FACILE** :\n• Parking gratuit disponible\n• Accessible en transport public\n• Proche du centre-ville d'Akwa\n• Visible depuis la rue principale\n\n🕒 **HORAIRES** :\n• Lundi à Samedi : 8h00 - 18h00\n• Dimanche : Fermé (sauf urgences)\n• Service d'urgence : 24h/24\n\n📞 **CONTACT DIRECT** :\n• Téléphone : (+237) 675 978 777\n• Email : infos@inauto.fr\n\nVous connaissez le quartier Akwa ?`,
+          `Nous sommes très faciles à trouver ! ${getRandomEmoji('positive')}\n\n📍 **ADRESSE EXACTE** :\n🏢 **IN AUTO**\n📍 Rue PAU, Akwa\n🎯 **Repère principal** : En face d'AGROMAC\n🏪 À côté de la microfinance FIGEC\n🌍 Douala, Cameroun\n\n🚗 **ACCÈS FACILE** :\n• Parking gratuit disponible\n• Accessible en transport public\n• Proche du centre-ville d\'Akwa\n• Visible depuis la rue principale\n\n🕒 **HORAIRES** :\n• Lundi à Samedi : 8h00 - 18h00\n• Dimanche : Fermé (sauf urgences)\n• Service d'urgence : 24h/24\n\n📞 **CONTACT DIRECT** :\n• Téléphone : (+237) 675 978 777\n• Email : infos@inauto.fr\n\nVous connaissez le quartier Akwa ?`,
           [
             "Je connais AGROMAC",
             "Comment y aller ?",
