@@ -10,7 +10,7 @@ const Services: React.FC = () => {
       price: '15 000 FCFA',
       duration: '15-45 min',
       features: ['Lecture codes défaut', 'Test capteurs', 'Rapport détaillé', 'Conseils personnalisés'],
-      color: 'from-blue-500 to-blue-600',
+      color: 'from-black to-gray-800',
       popular: false
     },
     {
@@ -20,7 +20,7 @@ const Services: React.FC = () => {
       price: '35 000 FCFA',
       duration: '45 min',
       features: ['Huile moteur premium', 'Filtre à huile', 'Filtre à air', 'Vérification 20 points'],
-      color: 'from-green-500 to-green-600',
+      color: 'from-red-500 to-red-600',
       popular: true
     },
     {
@@ -30,7 +30,7 @@ const Services: React.FC = () => {
       price: '25 000 FCFA',
       duration: '60-90 min',
       features: ['Recharge gaz R134a', 'Nettoyage évaporateur', 'Test étanchéité', 'Désinfection circuit'],
-      color: 'from-cyan-500 to-cyan-600',
+      color: 'from-gray-700 to-gray-800',
       popular: false
     },
     {
@@ -50,7 +50,7 @@ const Services: React.FC = () => {
       price: '15 000 FCFA',
       duration: '60 min',
       features: ['Montage pneus', 'Équilibrage roues', 'Géométrie 4 roues', 'Contrôle pression'],
-      color: 'from-purple-500 to-purple-600',
+      color: 'from-black to-gray-700',
       popular: false
     },
     {
@@ -60,7 +60,7 @@ const Services: React.FC = () => {
       price: '75 000 FCFA',
       duration: '2 heures',
       features: ['Contrôle 50 points', 'Vidange complète', 'Filtres multiples', 'Rapport détaillé'],
-      color: 'from-orange-500 to-orange-600',
+      color: 'from-red-600 to-red-700',
       popular: true
     }
   ];
@@ -99,13 +99,13 @@ const Services: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6">
+          <div className="inline-flex items-center bg-gradient-to-r from-black to-red-600 text-white px-6 py-2 rounded-full text-sm font-semibold mb-6">
             <Wrench className="h-4 w-4 mr-2" />
             Nos Services
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 mb-6">
             Services
-            <span className="block bg-gradient-to-r from-blue-600 to-red-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-black to-red-600 bg-clip-text text-transparent">
               Professionnels
             </span>
           </h2>
@@ -122,7 +122,7 @@ const Services: React.FC = () => {
               {/* Badge Popular */}
               {service.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center">
+                  <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center">
                     <Star className="h-3 w-3 mr-1 fill-current" />
                     Populaire
                   </div>
@@ -194,7 +194,7 @@ const Services: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {guarantees.map((guarantee, index) => (
               <div key={index} className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-black to-red-600 text-white rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
                   <guarantee.icon className="h-8 w-8" />
                 </div>
                 <h4 className="text-lg font-bold text-gray-800 mb-3">{guarantee.title}</h4>

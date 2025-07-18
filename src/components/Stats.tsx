@@ -7,8 +7,8 @@ const Stats: React.FC = () => {
       icon: Calendar,
       number: '5+',
       label: 'Années d\'Expérience',
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      color: 'text-black',
+      bgColor: 'bg-gray-100',
       description: 'De service d\'excellence'
     },
     {
@@ -23,8 +23,8 @@ const Stats: React.FC = () => {
       icon: Users,
       number: '500+',
       label: 'Clients Satisfaits',
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      color: 'text-black',
+      bgColor: 'bg-gray-100',
       description: 'Qui nous font confiance'
     },
     {
@@ -48,7 +48,7 @@ const Stats: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
+          <div className="inline-flex items-center bg-gradient-to-r from-black to-red-600 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
             <TrendingUp className="h-4 w-4 mr-2" />
             Nos Performances
           </div>
@@ -85,7 +85,7 @@ const Stats: React.FC = () => {
                 </div>
 
                 {/* Hover Effect */}
-                <div className={`h-1 w-0 ${stat.color === 'text-blue-600' ? 'bg-blue-600' : 'bg-red-500'} rounded-full mt-4 group-hover:w-full transition-all duration-500`}></div>
+                <div className={`h-1 w-0 ${stat.color === 'text-black' ? 'bg-black' : 'bg-red-500'} rounded-full mt-4 group-hover:w-full transition-all duration-500`}></div>
               </div>
             </div>
           ))}
@@ -93,7 +93,7 @@ const Stats: React.FC = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-3xl p-8 max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-black to-red-600 text-white rounded-3xl p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl lg:text-3xl font-bold mb-4">
               Rejoignez nos clients satisfaits !
             </h3>
@@ -102,7 +102,7 @@ const Stats: React.FC = () => {
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+              className="inline-flex items-center bg-white text-red-600 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
             >
               Prendre Rendez-vous
               <Award className="h-5 w-5 ml-2" />

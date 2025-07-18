@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-blue-600 text-white py-2 px-4">
+      <div className="bg-black text-white py-2 px-4">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
           <div className="flex items-center space-x-4 mb-2 md:mb-0">
             <div className="flex items-center">
@@ -58,14 +58,14 @@ const Header: React.FC = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                  className="text-gray-700 hover:text-red-600 font-medium transition-colors"
                 >
                   {item.label}
                 </a>
               ))}
               <Link
                 to="/admin"
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                className="text-gray-700 hover:text-red-600 font-medium transition-colors"
               >
                 Admin
               </Link>
@@ -97,7 +97,7 @@ const Header: React.FC = () => {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="block py-2 text-gray-700 hover:text-blue-600 font-medium"
+                  className="block py-2 text-gray-700 hover:text-red-600 font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}

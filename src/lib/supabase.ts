@@ -162,6 +162,25 @@ export const rendezVousService = {
   async create(rendezVous: Omit<RendezVous, 'id' | 'created_at' | 'updated_at'>): Promise<RendezVous> {
     if (!supabase) throw new Error('Supabase non configuré');
     
+    // Vérifier la limite de rendez-vous par créneau (maximum 3)
+    if (rendezVous.date && rendezVous.heure) {
+      const { count, error: countError } = await supabase
+        .from('rendezvous')
+        .select('*', { count: 'exact', head: true })
+        .eq('date', rendezVous.date)
+        .eq('heure', rendezVous.heure)
+        .neq('status', 'annule'); // Exclure les rendez-vous annulés
+      
+      if (countError) {
+        console.error('Erreur lors de la vérification du créneau:', countError);
+        throw new Error('Erreur lors de la vérification de disponibilité du créneau');
+      }
+      
+      if (count && count >= 3) {
+        throw new Error('SLOT_FULL: Ce créneau horaire est complet (maximum 3 rendez-vous). Veuillez choisir un autre créneau.');
+      }
+    }
+    
     const { data, error } = await supabase
       .from('rendezvous')
       .insert([rendezVous])

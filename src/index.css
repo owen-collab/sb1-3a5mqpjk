@@ -16,7 +16,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
@@ -24,11 +24,11 @@
   }
   
   .btn-outline {
-    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105;
+    @apply border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105;
   }
   
   .gradient-bg {
-    @apply bg-gradient-to-br from-blue-600 via-blue-700 to-red-500;
+    @apply bg-gradient-to-br from-black via-gray-800 to-red-600;
   }
   
   .card-hover {
@@ -50,6 +50,29 @@
   .pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite alternate;
   }
+
+  /* Lignes décoratives noires et rouges */
+  .decorative-lines::before,
+  .decorative-lines::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 4px;
+    height: 100vh;
+    z-index: -1;
+  }
+
+  .decorative-lines::before {
+    left: 10%;
+    background: linear-gradient(45deg, #000000 0%, #000000 50%, #dc2626 50%, #dc2626 100%);
+    transform: skewX(-15deg);
+  }
+
+  .decorative-lines::after {
+    right: 10%;
+    background: linear-gradient(-45deg, #dc2626 0%, #dc2626 50%, #000000 50%, #000000 100%);
+    transform: skewX(15deg);
+  }
 }
 
 @layer utilities {
@@ -70,8 +93,8 @@
 
   .bg-mesh {
     background-image: 
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
   }
 }
 
@@ -87,10 +110,10 @@
 
 @keyframes pulse-glow {
   0% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
   }
   100% {
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -174,8 +197,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
   transform: scale(1.02);
   transition: all 0.3s ease;
 }
@@ -326,12 +349,12 @@
 
 /* Styles pour les gradients */
 .gradient-text {
-  @apply bg-gradient-to-r from-blue-600 to-red-500 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-black to-red-600 bg-clip-text text-transparent;
 }
 
 .gradient-border {
   background: linear-gradient(white, white) padding-box,
-              linear-gradient(45deg, #3b82f6, #ef4444) border-box;
+              linear-gradient(45deg, #000000, #dc2626) border-box;
   border: 2px solid transparent;
 }
 
@@ -344,27 +367,27 @@
 
 /* Styles pour les ombres personnalisées */
 .shadow-glow {
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
 }
 
 .shadow-glow-red {
-  box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
 }
 
 /* Styles pour les overlays */
 .overlay-gradient {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(239, 68, 68, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
 }
 
 /* Styles pour les patterns */
 .pattern-dots {
-  background-image: radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
 .pattern-grid {
   background-image: 
-    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
 }

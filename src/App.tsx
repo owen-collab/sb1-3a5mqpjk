@@ -16,7 +16,7 @@ import DebugSupabase from './components/DebugSupabase';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white decorative-lines">
         <Routes>
           {/* Page principale */}
           <Route path="/" element={

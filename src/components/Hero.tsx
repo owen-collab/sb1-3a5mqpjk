@@ -3,12 +3,12 @@ import { Phone, Shield, Clock, Wrench, CheckCircle, ArrowRight, Star, Calendar, 
 
 const Hero: React.FC = () => {
   return (
-    <section id="accueil" className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-red-500 text-white min-h-screen flex items-center">
+    <section id="accueil" className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-red-600 text-white min-h-screen flex items-center">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-red-500 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-red-300 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-blue-300 rounded-full blur-2xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
@@ -16,14 +16,14 @@ const Hero: React.FC = () => {
           <div className="hero-content space-y-8">
             {/* Badge Premium */}
             <div className="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 text-sm font-semibold border border-white/30">
-              <Star className="h-4 w-4 mr-2 text-yellow-400" />
+              <Star className="h-4 w-4 mr-2 text-red-400" />
               #1 Garage Premium à Douala
-              <Award className="h-4 w-4 ml-2 text-yellow-400" />
+              <Award className="h-4 w-4 ml-2 text-red-400" />
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
               <span className="block">Votre Expert</span>
-              <span className="block bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
                 Automobile
               </span>
               <span className="block">de Confiance</span>
@@ -31,30 +31,30 @@ const Hero: React.FC = () => {
 
             <p className="text-xl lg:text-2xl opacity-90 leading-relaxed max-w-2xl">
               Depuis notre création, nous révolutionnons l'entretien automobile à Douala avec 
-              <span className="font-semibold text-yellow-400"> une technologie de pointe</span>, 
-              <span className="font-semibold text-orange-400"> une transparence totale</span> et 
-              <span className="font-semibold text-green-400"> un service client d'exception</span>.
+              <span className="font-semibold text-red-400"> une technologie de pointe</span>, 
+              <span className="font-semibold text-white"> une transparence totale</span> et 
+              <span className="font-semibold text-red-400"> un service client d'exception</span>.
             </p>
 
             {/* Features Grid Premium */}
             <div className="grid grid-cols-3 gap-6 py-8">
               <div className="text-center group">
                 <div className="bg-white/20 backdrop-blur-sm w-20 h-20 rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-all duration-300 border border-white/30">
-                  <Wrench className="h-10 w-10 text-yellow-400" />
+                  <Wrench className="h-10 w-10 text-red-400" />
                 </div>
                 <span className="text-sm font-semibold">Diagnostic Gratuit</span>
                 <div className="text-xs opacity-75 mt-1">Technologie avancée</div>
               </div>
               <div className="text-center group">
                 <div className="bg-white/20 backdrop-blur-sm w-20 h-20 rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-all duration-300 border border-white/30">
-                  <Shield className="h-10 w-10 text-green-400" />
+                  <Shield className="h-10 w-10 text-white" />
                 </div>
                 <span className="text-sm font-semibold">Garantie 6 Mois</span>
                 <div className="text-xs opacity-75 mt-1">Toutes interventions</div>
               </div>
               <div className="text-center group">
                 <div className="bg-white/20 backdrop-blur-sm w-20 h-20 rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-all duration-300 border border-white/30">
-                  <Clock className="h-10 w-10 text-orange-400" />
+                  <Clock className="h-10 w-10 text-red-400" />
                 </div>
                 <span className="text-sm font-semibold">Service Express</span>
                 <div className="text-xs opacity-75 mt-1">Délais respectés</div>
@@ -83,21 +83,21 @@ const Hero: React.FC = () => {
             {/* Trust Indicators Premium */}
             <div className="flex items-center justify-between pt-8 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <div className="text-center">
-                <div className="text-3xl font-bold text-yellow-400">500+</div>
+                <div className="text-3xl font-bold text-red-400">500+</div>
                 <div className="text-sm opacity-80">Clients Satisfaits</div>
                 <div className="flex justify-center mt-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 text-yellow-400 fill-current" />
+                    <Star key={i} className="h-3 w-3 text-red-400 fill-current" />
                   ))}
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-400">4.9/5</div>
+                <div className="text-3xl font-bold text-white">4.9/5</div>
                 <div className="text-sm opacity-80">Note Moyenne</div>
                 <div className="text-xs opacity-70 mt-1">Google Reviews</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-400">24h</div>
+                <div className="text-3xl font-bold text-red-400">24h</div>
                 <div className="text-sm opacity-80">Service Urgence</div>
                 <div className="text-xs opacity-70 mt-1">7j/7 disponible</div>
               </div>
@@ -154,12 +154,12 @@ const Hero: React.FC = () => {
             {/* Floating Cards Premium */}
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 border border-white/20">
-                <div className="text-2xl font-bold text-yellow-400 mb-1">15min</div>
+                <div className="text-2xl font-bold text-red-400 mb-1">15min</div>
                 <div className="text-sm opacity-80">Diagnostic Express</div>
                 <div className="text-xs opacity-70 mt-1">Résultats immédiats</div>
               </div>
               <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-6 text-center transform hover:scale-105 transition-all duration-300 border border-white/20">
-                <div className="text-2xl font-bold text-green-400 mb-1">6 mois</div>
+                <div className="text-2xl font-bold text-white mb-1">6 mois</div>
                 <div className="text-sm opacity-80">Garantie Totale</div>
                 <div className="text-xs opacity-70 mt-1">Pièces & main d'œuvre</div>
               </div>
@@ -170,15 +170,15 @@ const Hero: React.FC = () => {
               <h4 className="text-lg font-semibold mb-4 text-center">Services Express Disponibles</h4>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="flex items-center">
-                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-white rounded-full mr-2"></div>
                   <span>Vidange 30min</span>
                 </div>
                 <div className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-red-400 rounded-full mr-2"></div>
                   <span>Diagnostic 15min</span>
                 </div>
                 <div className="flex items-center">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
+                  <div className="w-2 h-2 bg-white rounded-full mr-2"></div>
                   <span>Pneus 20min</span>
                 </div>
                 <div className="flex items-center">

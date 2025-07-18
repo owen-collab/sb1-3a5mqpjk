@@ -7,13 +7,13 @@ const About: React.FC = () => {
       icon: Star,
       title: 'Excellence',
       description: 'Qualité irréprochable dans chaque intervention',
-      color: 'text-yellow-500'
+      color: 'text-red-500'
     },
     {
       icon: Handshake,
       title: 'Confiance',
       description: 'Transparence totale et conseils honnêtes',
-      color: 'text-blue-600'
+      color: 'text-black'
     },
     {
       icon: Wrench,
@@ -57,11 +57,11 @@ const About: React.FC = () => {
             </p>
             <div className="flex items-center space-x-4 mb-6">
               <div className="flex items-center">
-                <Award className="h-5 w-5 text-yellow-500 mr-2" />
+                <Award className="h-5 w-5 text-red-500 mr-2" />
                 <span className="text-sm font-semibold">Garage Certifié</span>
               </div>
               <div className="flex items-center">
-                <Users className="h-5 w-5 text-blue-600 mr-2" />
+                <Users className="h-5 w-5 text-black mr-2" />
                 <span className="text-sm font-semibold">Équipe Qualifiée</span>
               </div>
               <div className="flex items-center">
@@ -106,18 +106,18 @@ const About: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {certifications.map((cert, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="bg-blue-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <div className="bg-red-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
                   <Award className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold text-gray-800 mb-1">{cert.name}</h4>
-                <p className="text-sm text-blue-600 font-medium">{cert.level}</p>
+                <p className="text-sm text-red-600 font-medium">{cert.level}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Témoignage du dirigeant */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-red-500 text-white rounded-lg p-8">
+        <div className="mt-16 bg-gradient-to-r from-black to-red-600 text-white rounded-lg p-8">
           <div className="text-center">
             <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
               <Users className="h-10 w-10" />

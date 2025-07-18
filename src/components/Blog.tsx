@@ -127,7 +127,7 @@ const Blog: React.FC = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-16 bg-gradient-to-r from-blue-900 to-green-600 text-white rounded-lg p-8 text-center">
+        <div className="mt-16 bg-gradient-to-r from-black to-red-600 text-white rounded-lg p-8 text-center">
           <h3 className="text-2xl font-bold mb-4">
             Restez informé de nos derniers conseils
           </h3>
@@ -138,9 +138,9 @@ const Blog: React.FC = () => {
             <input
               type="email"
               placeholder="Votre adresse email"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-800 border-none focus:ring-2 focus:ring-orange-500"
+              className="flex-1 px-4 py-3 rounded-lg text-gray-800 border-none focus:ring-2 focus:ring-red-500"
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+            <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
               S'inscrire
             </button>
           </div>
