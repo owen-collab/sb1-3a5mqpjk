@@ -152,7 +152,7 @@ const Chatbot: React.FC = () => {
       const timeGreeting = new Date().getHours() < 18 ? 'journée' : 'soirée';
       simulateTyping(() => {
         addBotMessage(
-          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? context.userName : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd\'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
+          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? context.userName : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
           [
             "Ma voiture a un problème",
             "Je veux un entretien",
@@ -313,7 +313,7 @@ const Chatbot: React.FC = () => {
       
       simulateTyping(() => {
         addBotMessage(
-          `Ah, vous aimez l'humour ! ${getRandomEmoji(\'positive')} Moi aussi ! Voici une petite blague auto :\n\n${randomJoke}\n\nAlors, ça vous a fait sourire ? 😊 Chez IN AUTO, on aime garder la bonne humeur même quand on parle mécanique !\n\nBon, revenons à nos voitures maintenant ! ${getRandomEmoji('car')}`,
+          `Ah, vous aimez l'humour ! ${getRandomEmoji('positive')} Moi aussi ! Voici une petite blague auto :\n\n${randomJoke}\n\nAlors, ça vous a fait sourire ? 😊 Chez IN AUTO, on aime garder la bonne humeur même quand on parle mécanique !\n\nBon, revenons à nos voitures maintenant ! ${getRandomEmoji('car')}`,
           [
             "Haha, pas mal ! 😄",
             "Encore une blague !",
@@ -326,7 +326,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('au revoir') || message.includes('bye') || message.includes('à bientôt') || message.includes('tchao') || message.includes('salut')) {
       simulateTyping(() => {
         addBotMessage(
-          \`Au revoir ${context.userName ? context.userName : ''} ! ${getRandomEmoji('positive')} C'était un plaisir de discuter avec vous !\n\n🚗 **N\'OUBLIEZ PAS** :\n• Votre véhicule mérite le meilleur !\n• Nous sommes toujours là pour vous aider\n• Service d'urgence 24h/24 disponible\n\n💬 **REVENEZ QUAND VOUS VOULEZ** !\n📞 **En urgence** : (+237) 675 978 777\n📍 **Notre adresse** : Rue PAU, Akwa (face AGROMAC)\n\nPrenez soin de vous et de votre voiture ! À très bientôt chez IN AUTO ! ${getRandomEmoji(\'car')} ✨`,
+          `Au revoir ${context.userName ? context.userName : ''} ! ${getRandomEmoji('positive')} C'était un plaisir de discuter avec vous !\n\n🚗 **N'OUBLIEZ PAS** :\n• Votre véhicule mérite le meilleur !\n• Nous sommes toujours là pour vous aider\n• Service d'urgence 24h/24 disponible\n\n💬 **REVENEZ QUAND VOUS VOULEZ** !\n📞 **En urgence** : (+237) 675 978 777\n📍 **Notre adresse** : Rue PAU, Akwa (face AGROMAC)\n\nPrenez soin de vous et de votre voiture ! À très bientôt chez IN AUTO ! ${getRandomEmoji('car')} ✨`,
           [
             "À bientôt Alex ! 👋",
             "Merci pour tout !",
