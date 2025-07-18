@@ -358,7 +358,7 @@ const Contact: React.FC = () => {
                   value={formData.service}
                   onChange={handleInputChange}
                   required
-                  className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ${
+                  className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
                     errors.service ? 'border-red-500 bg-red-50' : 'border-gray-300'
                   }`}
                 >
@@ -379,10 +379,10 @@ const Contact: React.FC = () => {
                 
                 {/* Affichage du prix du service */}
                 {formData.service && getServicePrice(formData.service) && (
-                  <div className="mt-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="mt-3 p-4 bg-red-50 border border-red-200 rounded-lg">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-blue-700">Prix du service :</span>
-                      <span className="font-bold text-blue-800">
+                      <span className="text-sm text-red-700">Prix du service :</span>
+                      <span className="font-bold text-red-800">
                         {getServicePrice(formData.service)?.price === 0 
                           ? 'Sur devis' 
                           : `${getServicePrice(formData.service)?.price.toLocaleString()} FCFA`
@@ -391,7 +391,7 @@ const Contact: React.FC = () => {
                     </div>
                     {getServicePrice(formData.service)?.price > 0 && (
                       <div className="mt-3 space-y-2">
-                        <p className="text-xs text-blue-600">Options de paiement :</p>
+                        <p className="text-xs text-red-600">Options de paiement :</p>
                         <div className="flex space-x-4">
                           <label className="flex items-center">
                             <input
@@ -402,7 +402,7 @@ const Contact: React.FC = () => {
                               onChange={(e) => setPaymentOption(e.target.value as 'later' | 'now')}
                               className="mr-2"
                             />
-                            <span className="text-sm text-blue-700">Payer sur place</span>
+                            <span className="text-sm text-red-700">Payer sur place</span>
                           </label>
                           <label className="flex items-center">
                             <input
@@ -413,7 +413,7 @@ const Contact: React.FC = () => {
                               onChange={(e) => setPaymentOption(e.target.value as 'later' | 'now')}
                               className="mr-2"
                             />
-                            <span className="text-sm text-blue-700">Payer maintenant (-5%)</span>
+                            <span className="text-sm text-red-700">Payer maintenant (-5%)</span>
                           </label>
                         </div>
                       </div>
@@ -434,7 +434,7 @@ const Contact: React.FC = () => {
                     value={formData.date}
                     onChange={handleInputChange}
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div className="form-group">
@@ -446,7 +446,7 @@ const Contact: React.FC = () => {
                     name="heure"
                     value={formData.heure}
                     onChange={handleInputChange}
-                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   >
                     <option value="">Choisir un créneau</option>
                     <option value="08h00">08h00 - 10h00</option>
@@ -467,7 +467,7 @@ const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   placeholder="Décrivez votre problème ou vos besoins spécifiques..."
                 ></textarea>
               </div>
@@ -523,8 +523,8 @@ const Contact: React.FC = () => {
               
               <div className="space-y-8">
                 <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-blue-100 rounded-2xl">
-                    <MapPin className="h-6 w-6 text-blue-600" />
+                  <div className="p-3 bg-red-100 rounded-2xl">
+                    <MapPin className="h-6 w-6 text-red-600" />
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-800 mb-2">Notre Adresse</h4>
@@ -544,7 +544,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="font-bold text-gray-800 mb-2">Téléphone</h4>
                     <p className="text-gray-700">
-                      <a href="tel:+237675978777" className="text-blue-600 hover:underline font-semibold text-lg">
+                      <a href="tel:+237675978777" className="text-red-600 hover:underline font-semibold text-lg">
                         (+237) 675 978 777
                       </a>
                     </p>
@@ -553,13 +553,13 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-blue-100 rounded-2xl">
-                    <Mail className="h-6 w-6 text-blue-600" />
+                  <div className="p-3 bg-red-100 rounded-2xl">
+                    <Mail className="h-6 w-6 text-red-600" />
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-800 mb-2">Email</h4>
                     <p className="text-gray-700">
-                      <a href="mailto:infos@inauto.fr" className="text-blue-600 hover:underline">
+                      <a href="mailto:infos@inauto.fr" className="text-red-600 hover:underline">
                         infos@inauto.fr
                       </a>
                     </p>
