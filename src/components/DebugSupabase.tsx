@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Database, Eye, RefreshCw, Settings, Zap, Copy, ExternalLink } from 'lucide-react';
-import { supabase, testSupabaseConnection, testSupabaseInsert, getSupabaseStats, rendezVousService } from '../lib/supabase';
+import { supabase, testSupabaseConnection, testSupabaseInsert, getSupabaseStats, rendezVousService } from '../lib/supabase.tsx';
 
 const DebugSupabase: React.FC = () => {
   const [debugInfo, setDebugInfo] = useState<any>({});
