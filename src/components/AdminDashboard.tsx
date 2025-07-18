@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Users, CreditCard, TrendingUp, Eye, Edit, Trash2, Phone, Mail, Clock, CheckCircle, XCircle, AlertCircle, Filter, Search, Download, RefreshCw, BarChart3 } from 'lucide-react';
-import { supabase, rendezVousService, paymentService, subscribeToRendezVous, subscribeToPayments, RendezVous, Payment } from '../lib/supabase';
+import { Calendar, Users, TrendingUp, Eye, Edit, Trash2, Phone, Mail, Clock, CheckCircle, XCircle, AlertCircle, Filter, Search, Download, RefreshCw, BarChart3 } from 'lucide-react';
+import { supabase, rendezVousService, subscribeToRendezVous, RendezVous } from '../lib/supabase';
 import { notificationService } from '../lib/notifications';
-import AnalyticsDashboard from './AnalyticsDashboard';
 
 const AdminDashboard: React.FC = () => {
   const [rendezVous, setRendezVous] = useState<RendezVous[]>([]);
-  const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'rendezvous' | 'payments' | 'analytics'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'rendezvous'>('overview');
   const [selectedRendezVous, setSelectedRendezVous] = useState<RendezVous | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,14 +32,9 @@ const AdminDashboard: React.FC = () => {
         loadRendezVous();
       });
 
-      const paymentsSubscription = subscribeToPayments((payload) => {
-        setLastUpdate(new Date());
-        loadPayments();
-      });
 
       return () => {
         rendezVousSubscription.unsubscribe();
-        paymentsSubscription.unsubscribe();
       };
     } catch (error) {
       console.error('Erreur lors de l\'initialisation des subscriptions:', error);
@@ -51,7 +44,7 @@ const AdminDashboard: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      await Promise.all([loadRendezVous(), loadPayments()]);
+      await loadRendezVous();
     } catch (error) {
       console.error('Erreur lors du chargement des données:', error);
     } finally {
@@ -68,14 +61,6 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const loadPayments = async () => {
-    try {
-      const data = await paymentService.getAll();
-      setPayments(data || []);
-    } catch (error) {
-      console.error('Erreur lors du chargement des paiements:', error);
-    }
-  };
 
   const updateRendezVousStatus = async (id: string, status: RendezVous['status']) => {
     try {
@@ -119,9 +104,7 @@ const AdminDashboard: React.FC = () => {
     nouveaux: rendezVous.filter(rdv => rdv.status === 'nouveau').length,
     confirmes: rendezVous.filter(rdv => rdv.status === 'confirme').length,
     termines: rendezVous.filter(rdv => rdv.status === 'termine').length,
-    totalPaiements: payments.reduce((sum, payment) => sum + payment.amount, 0),
-    paiementsReussis: payments.filter(payment => payment.status === 'succeeded').length,
-    tauxConversion: rendezVous.length > 0 ? (payments.filter(p => p.status === 'succeeded').length / rendezVous.length * 100).toFixed(1) : '0'
+    tauxCompletion: rendezVous.length > 0 ? ((rendezVous.filter(rdv => rdv.status === 'termine').length / rendezVous.length) * 100).toFixed(1) : '0'
   };
 
   const getStatusColor = (status: string) => {
@@ -135,15 +118,6 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const getPaymentStatusColor = (status: string) => {
-    switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'paid': return 'bg-green-100 text-green-800';
-      case 'failed': return 'bg-red-100 text-red-800';
-      case 'refunded': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
 
   if (loading) {
     return (
@@ -191,9 +165,7 @@ const AdminDashboard: React.FC = () => {
         <div className="flex space-x-8 border-b border-gray-200 mb-8">
           {[
             { id: 'overview', label: 'Vue d\'ensemble', icon: TrendingUp },
-            { id: 'rendezvous', label: 'Rendez-vous', icon: Calendar },
-            { id: 'payments', label: 'Paiements', icon: CreditCard },
-            { id: 'analytics', label: 'Rapports', icon: BarChart3 }
+            { id: 'rendezvous', label: 'Rendez-vous', icon: Calendar }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -241,26 +213,24 @@ const AdminDashboard: React.FC = () => {
 
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center">
-                  <div className="p-2 bg-yellow-100 rounded-lg">
-                    <CreditCard className="h-6 w-6 text-yellow-600" />
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <TrendingUp className="h-6 w-6 text-purple-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Revenus</p>
-                    <p className="text-2xl font-semibold text-gray-900">
-                      {stats.totalPaiements.toLocaleString()} FCFA
-                    </p>
+                    <p className="text-sm font-medium text-gray-600">Taux Complétion</p>
+                    <p className="text-2xl font-semibold text-gray-900">{stats.tauxCompletion}%</p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <TrendingUp className="h-6 w-6 text-purple-600" />
+                  <div className="p-2 bg-gray-100 rounded-lg">
+                    <Users className="h-6 w-6 text-gray-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Taux Conversion</p>
-                    <p className="text-2xl font-semibold text-gray-900">{stats.tauxConversion}%</p>
+                    <p className="text-sm font-medium text-gray-600">En Attente</p>
+                    <p className="text-2xl font-semibold text-gray-900">{stats.nouveaux}</p>
                   </div>
                 </div>
               </div>
@@ -381,7 +351,6 @@ const AdminDashboard: React.FC = () => {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date/Heure</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paiement</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
@@ -434,14 +403,6 @@ const AdminDashboard: React.FC = () => {
                             <option value="annule">Annulé</option>
                           </select>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getPaymentStatusColor(rdv.payment_status)}`}>
-                            {rdv.payment_status}
-                            {rdv.created_at && new Date(rdv.created_at) > new Date(Date.now() - 300000) && (
-                              <span className="ml-1 text-xs animate-pulse">🆕</span>
-                            )}
-                          </span>
-                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
@@ -479,77 +440,6 @@ const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Analytics Tab */}
-        {activeTab === 'analytics' && (
-          <AnalyticsDashboard />
-        )}
-
-        {/* Gestion des paiements */}
-        {activeTab === 'payments' && (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Historique des paiements ({payments.length})
-                </h3>
-                <div className="flex items-center text-sm text-gray-500">
-                  <CreditCard className="h-4 w-4 mr-1" />
-                  Temps réel
-                </div>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Transaction</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Méthode</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {payments.map((payment) => (
-                    <tr key={payment.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
-                        {payment.stripe_payment_id || payment.id.slice(0, 8)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {(payment as any).rendezvous?.nom || 'N/A'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        {payment.amount.toLocaleString()} {payment.currency}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {payment.payment_method || 'N/A'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getPaymentStatusColor(payment.status)}`}>
-                          {payment.status}
-                          {payment.created_at && new Date(payment.created_at) > new Date(Date.now() - 300000) && (
-                            <span className="ml-1 text-xs animate-pulse">🆕</span>
-                          )}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(payment.created_at).toLocaleDateString('fr-FR')}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {payments.length === 0 && (
-              <div className="text-center py-12 text-gray-500">
-                <CreditCard className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                <p className="text-lg font-medium">Aucun paiement enregistré</p>
-                <p className="text-sm">Les transactions apparaîtront ici en temps réel</p>
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Modal de détails du rendez-vous */}
@@ -607,12 +497,6 @@ const AdminDashboard: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-700">Statut</label>
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(selectedRendezVous.status)}`}>
                     {selectedRendezVous.status}
-                  </span>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Statut paiement</label>
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getPaymentStatusColor(selectedRendezVous.payment_status)}`}>
-                    {selectedRendezVous.payment_status}
                   </span>
                 </div>
               </div>

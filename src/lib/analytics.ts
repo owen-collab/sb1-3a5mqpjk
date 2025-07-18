@@ -37,16 +37,12 @@ export const analyticsService = {
   async getDashboardStats(): Promise<DashboardStats> {
     if (!supabase) throw new Error('Supabase non configuré');
 
-    // Get all appointments and payments
+    // Get all appointments
     const { data: appointments } = await supabase
       .from('rendezvous')
       .select('*');
 
-    const { data: payments } = await supabase
-      .from('payments')
-      .select('*');
-
-    if (!appointments || !payments) {
+    if (!appointments) {
       throw new Error('Erreur lors de la récupération des données');
     }
 
@@ -54,60 +50,25 @@ export const analyticsService = {
     const totalAppointments = appointments.length;
     const completedAppointments = appointments.filter(a => a.status === 'termine').length;
     const pendingAppointments = appointments.filter(a => a.status === 'nouveau' || a.status === 'confirme').length;
-    const successfulPayments = payments.filter(p => p.status === 'succeeded');
-    const totalRevenue = successfulPayments.reduce((sum, p) => sum + p.amount, 0);
-    const conversionRate = totalAppointments > 0 ? (successfulPayments.length / totalAppointments) * 100 : 0;
-    const averageServiceValue = successfulPayments.length > 0 ? totalRevenue / successfulPayments.length : 0;
 
     // Service statistics
-    const serviceStats = new Map<string, { count: number; revenue: number }>();
+    const serviceStats = new Map<string, { count: number }>();
     
     appointments.forEach(appointment => {
-      const current = serviceStats.get(appointment.service) || { count: 0, revenue: 0 };
+      const current = serviceStats.get(appointment.service) || { count: 0 };
       current.count += 1;
-      
-      // Find corresponding payment
-      const payment = payments.find(p => p.rendezvous_id === appointment.id && p.status === 'succeeded');
-      if (payment) {
-        current.revenue += payment.amount;
-      }
-      
       serviceStats.set(appointment.service, current);
     });
 
     const topServices: ServiceStats[] = Array.from(serviceStats.entries())
-      .map(([service, stats]) => ({
+      .map(([service, { count }]) => ({
         service,
-        count: stats.count,
-        revenue: stats.revenue,
-        percentage: (stats.count / totalAppointments) * 100
+        count,
+        revenue: 0,
+        percentage: (count / totalAppointments) * 100
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
-
-    // Revenue by month (last 6 months)
-    const revenueByMonth: RevenueStats[] = [];
-    for (let i = 5; i >= 0; i--) {
-      const date = subMonths(new Date(), i);
-      const monthStart = startOfMonth(date);
-      const monthEnd = endOfMonth(date);
-      
-      const monthPayments = payments.filter(p => {
-        const paymentDate = new Date(p.created_at);
-        return paymentDate >= monthStart && paymentDate <= monthEnd && p.status === 'succeeded';
-      });
-      
-      const monthAppointments = appointments.filter(a => {
-        const appointmentDate = new Date(a.created_at);
-        return appointmentDate >= monthStart && appointmentDate <= monthEnd;
-      });
-
-      revenueByMonth.push({
-        period: format(date, 'MMM yyyy'),
-        revenue: monthPayments.reduce((sum, p) => sum + p.amount, 0),
-        appointments: monthAppointments.length
-      });
-    }
 
     // Popular time slots
     const timeSlotStats = new Map<string, number>();
@@ -142,14 +103,14 @@ export const analyticsService = {
       }));
 
     return {
-      totalRevenue,
+      totalRevenue: 0,
       totalAppointments,
       completedAppointments,
       pendingAppointments,
-      conversionRate,
-      averageServiceValue,
+      conversionRate: 0,
+      averageServiceValue: 0,
       topServices,
-      revenueByMonth,
+      revenueByMonth: [],
       popularTimeSlots,
       statusDistribution
     };
@@ -162,11 +123,7 @@ export const analyticsService = {
       .from('rendezvous')
       .select('service, status, created_at');
 
-    const { data: payments } = await supabase
-      .from('payments')
-      .select('rendezvous_id, amount, status');
-
-    if (!appointments || !payments) return [];
+    if (!appointments) return [];
 
     const servicePerformance = new Map();
 
@@ -177,7 +134,6 @@ export const analyticsService = {
           name: service,
           total: 0,
           completed: 0,
-          revenue: 0,
           conversionRate: 0
         });
       }
@@ -188,12 +144,6 @@ export const analyticsService = {
       if (appointment.status === 'termine') {
         stats.completed += 1;
       }
-
-      // Find payment for this appointment
-      const payment = payments.find(p => p.rendezvous_id === appointment.id && p.status === 'succeeded');
-      if (payment) {
-        stats.revenue += payment.amount;
-      }
     });
 
     // Calculate conversion rates
@@ -202,6 +152,6 @@ export const analyticsService = {
     });
 
     return Array.from(servicePerformance.values())
-      .sort((a, b) => b.revenue - a.revenue);
+      .sort((a, b) => b.total - a.total);
   }
 };

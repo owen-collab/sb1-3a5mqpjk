@@ -172,7 +172,7 @@ const Services: React.FC = () => {
                     href="#contact"
                     className={`w-full bg-gradient-to-r ${service.color} hover:shadow-lg text-white py-4 px-6 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 text-center block group-hover:shadow-xl`}
                   >
-                    Réserver ce Service
+                    Prendre Rendez-vous
                   </a>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 # IN AUTO - Site Web Professionnel avec Paiements Stripe
 
-Site web moderne pour IN AUTO, garage automobile professionnel à Douala, Cameroun. Intègre un système de paiement Stripe pour les réservations de services.
+Site web moderne pour IN AUTO, garage automobile professionnel à Douala, Cameroun. Système de gestion des rendez-vous avec base de données Supabase.
 
 ## 🚀 Fonctionnalités
 
@@ -11,12 +11,12 @@ Site web moderne pour IN AUTO, garage automobile professionnel à Douala, Camero
 - **Chatbot intelligent** pour l'assistance client
 - **Formulaire de contact avancé** avec validation
 
-### Système de Paiement
-- **Intégration Stripe complète** pour les paiements sécurisés
-- **Support multi-méthodes** : cartes bancaires et mobile money
-- **Paiement immédiat ou sur place** avec remise pour paiement anticipé
-- **Gestion des rendez-vous** avec statuts de paiement
-- **Interface utilisateur intuitive** pour les transactions
+### Système de Rendez-vous
+- **Gestion complète des rendez-vous** avec Supabase
+- **Interface admin** pour gérer les demandes
+- **Notifications automatiques** par email
+- **Suivi en temps réel** des statuts
+- **Dashboard utilisateur** pour les clients connectés
 
 ### Services Proposés
 - Diagnostic électronique multi-marques
@@ -32,7 +32,6 @@ Site web moderne pour IN AUTO, garage automobile professionnel à Douala, Camero
 - **Styling** : Tailwind CSS
 - **Icons** : Lucide React
 - **Base de données** : Supabase
-- **Paiements** : Stripe
 - **Déploiement** : Netlify
 
 ## 📦 Installation
@@ -58,10 +57,6 @@ Remplissez le fichier `.env` avec vos clés :
 # Supabase
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Stripe
-VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
-STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
 ```
 
 4. **Démarrer le serveur de développement**
@@ -100,27 +95,8 @@ supabase functions deploy confirm-payment
 #### `rendezvous`
 - Stockage des demandes de rendez-vous
 - Statuts : nouveau, confirmé, en_cours, terminé, annulé
-- Statuts de paiement : pending, paid, failed, refunded
 
-#### `payments`
-- Enregistrement des transactions Stripe
-- Liaison avec les rendez-vous
-- Métadonnées des paiements
 
-## 💳 Configuration Stripe
-
-### 1. Créer un compte Stripe
-- Aller sur [stripe.com](https://stripe.com)
-- Créer un compte et activer les paiements
-
-### 2. Récupérer les clés API
-- **Clé publique** : `pk_test_...` (pour le frontend)
-- **Clé secrète** : `sk_test_...` (pour le backend)
-
-### 3. Configurer les webhooks (optionnel)
-Pour recevoir les notifications de paiement :
-- URL : `https://your-project.supabase.co/functions/v1/stripe-webhook`
-- Événements : `payment_intent.succeeded`, `payment_intent.payment_failed`
 
 ## 🎨 Personnalisation
 
@@ -130,17 +106,7 @@ Les couleurs principales sont définies dans `tailwind.config.js` :
 - **Rouge** : #EF4444 (urgences et CTA)
 
 ### Services et Prix
-Modifier les prix dans `src/lib/stripe.ts` :
-```typescript
-export const servicePrices: ServicePrice[] = [
-  {
-    id: 'diagnostic',
-    name: 'Diagnostic électronique',
-    price: 15000, // Prix en FCFA
-    // ...
-  }
-]
-```
+Les prix sont affichés à titre informatif dans les composants Services.
 
 ### Contenu
 - **Textes** : Modifier directement dans les composants React
@@ -173,7 +139,6 @@ VITE_SUPABASE_ANON_KEY=votre_clé_anonyme_supabase
 ```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your_production_anon_key
-VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_live_key
 ```
 
 ## 📱 Fonctionnalités Mobiles
@@ -186,7 +151,6 @@ VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_live_key
 ## 🔒 Sécurité
 
 - **Validation côté client et serveur**
-- **Chiffrement SSL** pour tous les paiements
 - **Row Level Security** sur Supabase
 - **Sanitisation des données** utilisateur
 - **Protection CORS** sur les API
@@ -195,13 +159,11 @@ VITE_STRIPE_PUBLISHABLE_KEY=pk_live_your_live_key
 
 ### Métriques importantes
 - Taux de conversion des formulaires
-- Succès des paiements
 - Temps de chargement des pages
 - Utilisation du chatbot
 
 ### Outils recommandés
 - Google Analytics 4
-- Stripe Dashboard pour les paiements
 - Supabase Dashboard pour la base de données
 
 ## 🆘 Support et Maintenance

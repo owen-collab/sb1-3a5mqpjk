@@ -10,25 +10,11 @@ export interface RendezVous {
   date?: string;
   heure?: string;
   message?: string;
-  status: 'nouveau' | 'confirme' | 'en_cours' | 'termine' | 'annule';
-  payment_status: 'pending' | 'paid' | 'failed' | 'refunded';
   user_id?: string;
   created_at: string;
   updated_at: string;
 }
 
-export interface Payment {
-  id: string;
-  rendezvous_id?: string;
-  stripe_payment_id?: string;
-  amount: number;
-  currency: string;
-  status: 'pending' | 'succeeded' | 'failed' | 'canceled';
-  payment_method?: string;
-  metadata?: any;
-  created_at: string;
-  updated_at: string;
-}
 
 // Initialize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -341,47 +327,6 @@ export const rendezVousService = {
   }
 };
 
-export const paymentService = {
-  async getAll(): Promise<Payment[]> {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    const { data, error } = await supabase
-      .from('payments')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) throw error;
-    return data || [];
-  },
-
-  async create(payment: Omit<Payment, 'id' | 'created_at' | 'updated_at'>): Promise<Payment> {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    const { data, error } = await supabase
-      .from('payments')
-      .insert([payment])
-      .select()
-      .single();
-    
-    if (error) throw error;
-    return data;
-  },
-
-  async update(id: string, updates: Partial<Payment>): Promise<Payment> {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    const { data, error } = await supabase
-      .from('payments')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-    
-    if (error) throw error;
-    return data;
-  }
-};
-
 // Real-time subscriptions
 export const subscribeToRendezVous = (callback: (payload: any) => void) => {
   if (!supabase) throw new Error('Supabase non configuré');
@@ -390,18 +335,6 @@ export const subscribeToRendezVous = (callback: (payload: any) => void) => {
     .channel('rendezvous-changes')
     .on('postgres_changes', 
       { event: '*', schema: 'public', table: 'rendezvous' }, 
-      callback
-    )
-    .subscribe();
-};
-
-export const subscribeToPayments = (callback: (payload: any) => void) => {
-  if (!supabase) throw new Error('Supabase non configuré');
-  
-  return supabase
-    .channel('payments-changes')
-    .on('postgres_changes', 
-      { event: '*', schema: 'public', table: 'payments' }, 
       callback
     )
     .subscribe();
