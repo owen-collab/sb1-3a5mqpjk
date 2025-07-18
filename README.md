@@ -1,45 +1,29 @@
-# IN AUTO - Site Web Professionnel avec Paiements Stripe
+# 📝 Gestionnaire de Tâches React + Supabase
 
-Site web moderne pour IN AUTO, garage automobile professionnel à Douala, Cameroun. Système de gestion des rendez-vous avec base de données Supabase.
+Une application simple de gestion de tâches construite avec React et Supabase.
 
 ## 🚀 Fonctionnalités
 
-### Site Web
-- **Design moderne et responsive** avec Tailwind CSS
-- **Optimisé pour le SEO** avec métadonnées et Schema.org
-- **Performance optimisée** avec lazy loading des images
-- **Chatbot intelligent** pour l'assistance client
-- **Formulaire de contact avancé** avec validation
+- ✅ Afficher toutes les tâches
+- ➕ Ajouter de nouvelles tâches
+- ✏️ Marquer les tâches comme complétées/non complétées
+- 🗑️ Supprimer des tâches
+- 📊 Statistiques en temps réel
+- 🎨 Interface moderne et responsive
 
-### Système de Rendez-vous
-- **Gestion complète des rendez-vous** avec Supabase
-- **Interface admin** pour gérer les demandes
-- **Notifications automatiques** par email
-- **Suivi en temps réel** des statuts
-- **Dashboard utilisateur** pour les clients connectés
+## 🛠️ Technologies
 
-### Services Proposés
-- Diagnostic électronique multi-marques
-- Entretien mécanique complet
-- Pneus et géométrie de précision
-- Climatisation
-- Système de freinage
-- Réparations diverses
-
-## 🛠️ Technologies Utilisées
-
-- **Frontend** : React 18 + TypeScript + Vite
-- **Styling** : Tailwind CSS
-- **Icons** : Lucide React
-- **Base de données** : Supabase
-- **Déploiement** : Netlify
+- **React 18** avec Hooks
+- **Supabase** pour la base de données
+- **Vite** pour le build
+- **CSS moderne** avec animations
 
 ## 📦 Installation
 
 1. **Cloner le projet**
 ```bash
-git clone <repository-url>
-cd in-auto-website
+git clone <votre-repo>
+cd gestionnaire-taches
 ```
 
 2. **Installer les dépendances**
@@ -47,144 +31,91 @@ cd in-auto-website
 npm install
 ```
 
-3. **Configuration des variables d'environnement**
-```bash
-cp .env.example .env
-```
+3. **Configuration Supabase**
 
-Remplissez le fichier `.env` avec vos clés :
-```env
-# Supabase
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-4. **Démarrer le serveur de développement**
-```bash
-npm run dev
-```
-
-## 🗄️ Configuration de la Base de Données
-
-### Supabase Setup
-
-1. **Créer un projet Supabase** sur [supabase.com](https://supabase.com)
-
-2. **Exécuter les migrations**
-```sql
--- Copier et exécuter le contenu de supabase/migrations/create_payments_tables.sql
--- dans l'éditeur SQL de Supabase
-```
-
-3. **Déployer les Edge Functions**
-```bash
-# Installer Supabase CLI
-npm install -g @supabase/cli
-
-# Se connecter à votre projet
-supabase login
-supabase link --project-ref your-project-ref
-
-# Déployer les fonctions
-supabase functions deploy create-payment-intent
-supabase functions deploy confirm-payment
-```
-
-### Structure des Tables
-
-#### `rendezvous`
-- Stockage des demandes de rendez-vous
-- Statuts : nouveau, confirmé, en_cours, terminé, annulé
-
-
-
-## 🎨 Personnalisation
-
-### Couleurs et Thème
-Les couleurs principales sont définies dans `tailwind.config.js` :
-- **Bleu** : #3B82F6 (services techniques)
-- **Rouge** : #EF4444 (urgences et CTA)
-
-### Services et Prix
-Les prix sont affichés à titre informatif dans les composants Services.
-
-### Contenu
-- **Textes** : Modifier directement dans les composants React
-- **Images** : Remplacer les fichiers dans le dossier `public/`
-- **Métadonnées SEO** : Modifier dans `index.html`
-
-## 🚀 Déploiement
-
-### Netlify (Recommandé)
-
-## 🔧 Diagnostic et Debug
-
-Si vous rencontrez des problèmes avec la base de données :
-
-1. **Page de diagnostic** : Allez sur `/debug` pour voir l'état complet de votre connexion Supabase
-2. **Vérifiez les variables d'environnement** dans votre fichier `.env`
-3. **Exécutez la migration** dans votre dashboard Supabase
-
-### Variables d'environnement requises
+Créez un fichier `.env` à la racine du projet :
 ```env
 VITE_SUPABASE_URL=https://votre-projet.supabase.co
 VITE_SUPABASE_ANON_KEY=votre_clé_anonyme_supabase
 ```
 
-1. Connecter votre repository GitHub à Netlify
-2. Configurer les variables d'environnement dans Netlify
-3. Déployer automatiquement
+4. **Créer la table dans Supabase**
 
-### Variables d'environnement de production
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your_production_anon_key
+Dans votre dashboard Supabase, exécutez cette requête SQL :
+
+```sql
+-- Créer la table tasks
+CREATE TABLE tasks (
+  id BIGSERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  completed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Activer RLS (Row Level Security)
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+
+-- Politique pour permettre toutes les opérations (pour la démo)
+CREATE POLICY "Allow all operations on tasks" ON tasks
+  FOR ALL USING (true);
 ```
 
-## 📱 Fonctionnalités Mobiles
+5. **Démarrer l'application**
+```bash
+npm run dev
+```
 
-- **Design responsive** optimisé pour tous les écrans
-- **Touch-friendly** avec boutons et zones tactiles adaptés
-- **Performance mobile** avec images optimisées
-- **PWA ready** (peut être installé comme app)
+## 🗄️ Structure de la base de données
+
+### Table `tasks`
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `id` | BIGSERIAL | Identifiant unique (clé primaire) |
+| `title` | TEXT | Titre de la tâche |
+| `completed` | BOOLEAN | Statut de completion (défaut: false) |
+| `created_at` | TIMESTAMP | Date de création |
+
+## 🎯 Utilisation
+
+1. **Ajouter une tâche** : Tapez dans le champ texte et cliquez sur "Ajouter"
+2. **Marquer comme complétée** : Cochez la case à côté de la tâche
+3. **Supprimer une tâche** : Cliquez sur l'icône poubelle 🗑️
+4. **Voir les statistiques** : En bas de la page
+
+## 🔧 Développement
+
+### Scripts disponibles
+- `npm run dev` - Démarrer en mode développement
+- `npm run build` - Construire pour la production
+- `npm run preview` - Prévisualiser la build de production
+
+### Structure du projet
+```
+src/
+├── lib/
+│   └── supabaseClient.js    # Configuration Supabase
+├── App.jsx                  # Composant principal
+├── App.css                  # Styles de l'application
+├── main.jsx                 # Point d'entrée
+└── index.css               # Styles globaux
+```
+
+## 🚀 Déploiement
+
+1. **Build de production**
+```bash
+npm run build
+```
+
+2. **Déployer sur Netlify/Vercel**
+- Connectez votre repository
+- Ajoutez les variables d'environnement
+- Déployez automatiquement
 
 ## 🔒 Sécurité
 
-- **Validation côté client et serveur**
-- **Row Level Security** sur Supabase
-- **Sanitisation des données** utilisateur
-- **Protection CORS** sur les API
+⚠️ **Important** : Cette application utilise une politique RLS permissive pour la démo. En production, implémentez des politiques de sécurité appropriées basées sur l'authentification des utilisateurs.
 
-## 📊 Analytics et Monitoring
+## 📝 Licence
 
-### Métriques importantes
-- Taux de conversion des formulaires
-- Temps de chargement des pages
-- Utilisation du chatbot
-
-### Outils recommandés
-- Google Analytics 4
-- Supabase Dashboard pour la base de données
-
-## 🆘 Support et Maintenance
-
-### Logs et Debugging
-- **Frontend** : Console du navigateur
-- **Supabase** : Logs dans le dashboard
-- **Stripe** : Dashboard des événements
-
-### Sauvegarde
-- **Base de données** : Sauvegarde automatique Supabase
-- **Code** : Repository Git
-- **Assets** : Stockage cloud recommandé
-
-## 📞 Contact
-
-Pour toute question technique ou support :
-- **Email** : infos@inauto.fr
-- **Téléphone** : (+237) 675 978 777
-- **Adresse** : Rue PAU, Akwa, Douala - Cameroun
-
-## 📄 Licence
-
-Ce projet est propriétaire d'IN AUTO. Tous droits réservés.
+MIT License - Libre d'utilisation pour vos projets !
