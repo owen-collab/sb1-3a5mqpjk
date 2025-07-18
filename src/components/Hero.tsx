@@ -115,7 +115,7 @@ const Hero: React.FC = () => {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-red-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
               <img 
-                src="/294960445_557556392518988_5899854189761142977_n.jpg" 
+                src="/477255297_1218926753048612_1400709284416765383_n.jpg" 
                 alt="Atelier IN AUTO - Garage professionnel Douala" 
                 className="relative rounded-3xl shadow-2xl w-full transform group-hover:scale-105 transition-transform duration-500 border-4 border-white/20"
                 loading="lazy"

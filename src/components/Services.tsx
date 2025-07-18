@@ -180,6 +180,94 @@ const Services: React.FC = () => {
           ))}
         </div>
 
+        {/* Gallery Section */}
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-800 mb-4">
+              Notre Atelier en Images
+            </h3>
+            <p className="text-xl text-gray-600">
+              Découvrez nos installations modernes et notre équipe professionnelle
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+              <img 
+                src="/IMG-20250708-WA0003.jpg" 
+                alt="Atelier IN AUTO - Vue d'ensemble" 
+                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-semibold">Atelier Principal</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+              <img 
+                src="/IMG-20250708-WA0006.jpg" 
+                alt="Équipements de diagnostic IN AUTO" 
+                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-semibold">Diagnostic Électronique</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+              <img 
+                src="/IMG-20250708-WA0007.jpg" 
+                alt="Zone de travail IN AUTO" 
+                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-semibold">Zone de Réparation</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group overflow-hidden rounded-2xl shadow-lg">
+              <img 
+                src="/IMG-20250708-WA0019.jpg" 
+                alt="Équipe IN AUTO au travail" 
+                className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-semibold">Équipe Professionnelle</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Large showcase image */}
+          <div className="mt-8 relative group overflow-hidden rounded-3xl shadow-2xl">
+            <img 
+              src="/IMG-20250708-WA0029.jpg" 
+              alt="Vue panoramique de l'atelier IN AUTO" 
+              className="w-full h-64 lg:h-80 object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-white">
+                  <h4 className="text-2xl lg:text-3xl font-bold mb-2">Atelier Moderne & Équipé</h4>
+                  <p className="text-lg opacity-90">Des installations de pointe pour votre véhicule</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Guarantees Section */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12 mb-16">
           <div className="text-center mb-12">
