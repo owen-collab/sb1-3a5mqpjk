@@ -294,7 +294,7 @@ const Contact: React.FC = () => {
                     value={formData.nom}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ${
+                    className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
                       errors.nom ? 'border-red-500 bg-red-50' : 'border-gray-300'
                     }`}
                     placeholder="Votre nom complet"
@@ -337,7 +337,7 @@ const Contact: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ${
+                  className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
                     errors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
                   }`}
                   placeholder="votre@email.com"
