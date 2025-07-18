@@ -626,28 +626,28 @@ const Chatbot: React.FC = () => {
             <div className="mt-3 flex flex-wrap gap-2">
               <button
                 onClick={() => handleQuickReply("J'ai un problème avec ma voiture")}
-                className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs hover:bg-red-200 transition-colors flex items-center"
+                className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs hover:bg-red-200 transition-colors flex items-center"
               >
                 <AlertCircle className="h-3 w-3 mr-1" />
                 🚨 Problème
               </button>
               <button
                 onClick={() => handleQuickReply("Prendre un rendez-vous")}
-                className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs hover:bg-blue-200 transition-colors flex items-center"
+                className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs hover:bg-gray-200 transition-colors flex items-center"
               >
                 <Calendar className="h-3 w-3 mr-1" />
                 📅 RDV
               </button>
               <button
                 onClick={() => handleQuickReply("Voir vos services")}
-                className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs hover:bg-green-200 transition-colors flex items-center"
+                className="px-3 py-1 bg-black text-white rounded-full text-xs hover:bg-gray-800 transition-colors flex items-center"
               >
                 <Wrench className="h-3 w-3 mr-1" />
                 🔧 Services
               </button>
               <a
                 href="tel:+237675978777"
-                className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs hover:bg-orange-200 transition-colors flex items-center"
+                className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs hover:bg-red-200 transition-colors flex items-center"
               >
                 <Phone className="h-3 w-3 mr-1" />
                 📞 Appeler

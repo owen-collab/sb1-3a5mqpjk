@@ -635,7 +635,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               className={`flex-1 px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-center ${
                 isProcessing || paymentStatus === 'success'
                   ? 'bg-gray-400 cursor-not-allowed text-white'
-                  : 'bg-gradient-to-r from-blue-600 to-red-500 hover:from-blue-700 hover:to-red-600 text-white transform hover:scale-105'
+                  : 'bg-gradient-to-r from-black to-red-600 hover:from-gray-800 hover:to-red-700 text-white transform hover:scale-105'
               }`}
             >
               {isProcessing ? (

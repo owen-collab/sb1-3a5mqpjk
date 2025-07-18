@@ -293,7 +293,6 @@ const Contact: React.FC = () => {
                     value={formData.nom}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
                     className={`w-full px-6 py-4 border rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ${
                       errors.nom ? 'border-red-500 bg-red-50' : 'border-gray-300'
                     }`}
@@ -434,7 +433,6 @@ const Contact: React.FC = () => {
                     value={formData.date}
                     onChange={handleInputChange}
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
@@ -447,8 +445,7 @@ const Contact: React.FC = () => {
                     name="heure"
                     value={formData.heure}
                     onChange={handleInputChange}
-                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                    className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   >
                     <option value="">Choisir un créneau</option>
                     <option value="08h00">08h00 - 10h00</option>
@@ -469,7 +466,6 @@ const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
                   placeholder="Décrivez votre problème ou vos besoins spécifiques..."
                 ></textarea>
@@ -611,7 +607,7 @@ const Contact: React.FC = () => {
               <h4 className="text-xl font-bold text-gray-800 mb-6">Notre Localisation</h4>
               <div className="bg-gradient-to-br from-blue-50 to-red-50 rounded-2xl h-64 flex items-center justify-center">
                 <div className="text-center text-gray-600">
-                  <MapPin className="h-16 w-16 mx-auto mb-4 text-blue-600" />
+                  <MapPin className="h-16 w-16 mx-auto mb-4 text-red-600" />
                   <p className="font-semibold text-lg">Rue PAU, Akwa</p>
                   <p className="text-gray-500">Douala, Cameroun</p>
                   <p className="text-sm mt-4 bg-white px-4 py-2 rounded-lg inline-block">
