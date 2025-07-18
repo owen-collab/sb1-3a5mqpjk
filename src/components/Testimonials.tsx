@@ -8,28 +8,28 @@ const Testimonials: React.FC = () => {
       role: 'Directeur d\'entreprise',
       rating: 5,
       comment: 'Service exceptionnel ! L\'équipe d\'IN AUTO a diagnostiqué et réparé une panne complexe que d\'autres garages n\'arrivaient pas à résoudre. Transparence totale sur les prix et délais respectés. Je recommande vivement !',
-      image: '/IMG-20250708-WA0007.jpg'
+      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150'
     },
     {
       name: 'Marie Ngono',
       role: 'Enseignante',
       rating: 5,
       comment: 'Enfin un garage qui prend le temps d\'expliquer ! Ils m\'ont montré exactement ce qui n\'allait pas avec photos à l\'appui. Travail impeccable et garantie respectée. Mon véhicule n\'a jamais été aussi bien entretenu.',
-      image: '/IMG-20250708-WA0024.jpg'
+      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150'
     },
     {
       name: 'Paul Mballa',
       role: 'Cadre commercial',
       rating: 5,
       comment: 'Équipe très professionnelle et accueillante. Ils ont réparé ma climatisation en moins de 2 heures et à un prix très raisonnable. L\'atelier est propre et bien équipé. Je reviendrai certainement !',
-      image: '/IMG-20250708-WA0029.jpg'
+      image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=150'
     },
     {
       name: 'Brigitte Fosso',
       role: 'Gérante de flotte',
       rating: 5,
       comment: 'Service de qualité pour mes véhicules de société. Ils gèrent parfaitement ma flotte de 5 véhicules avec des tarifs préférentiels et un suivi rigoureux. Facturation claire et interventions rapides.',
-      image: '/477255297_1218926753048612_1400709284416765383_n.jpg'
+      image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150'
     },
     {
       name: 'Michel Biya',
