@@ -27,7 +27,7 @@ const Blog: React.FC = () => {
       id: 3,
       title: "Économisez sur l'entretien de votre voiture",
       excerpt: "Astuces et conseils pour réduire les coûts d'entretien sans compromettre la qualité.",
-      image: "/IMG-20250708-WA0029.jpg",
+      image: "/IMG-20250708-WA0024.jpg",
       date: "5 Mars 2024",
       author: "Conseiller Auto",
       category: "Économie",
