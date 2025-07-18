@@ -60,19 +60,19 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-6">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-black hover:text-red-600 font-semibold transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50"
+                  className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 px-4 py-2 rounded-lg hover:bg-red-50 hover:shadow-sm"
                 >
                   {item.label}
                 </a>
               ))}
               <Link
                 to="/admin"
-                className="text-black hover:text-red-600 font-semibold transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50"
+                className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 px-4 py-2 rounded-lg hover:bg-red-50 hover:shadow-sm"
               >
                 Admin
               </Link>
@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                    className="flex items-center space-x-2 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                   >
                     <User className="h-4 w-4" />
                     <span>{user.profile?.nom || user.email}</span>
@@ -116,13 +116,13 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
                 <div className="flex space-x-3">
                   <button
                     onClick={onShowAuth}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-colors"
+                    className="bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium transition-all duration-300 shadow-sm hover:shadow-md"
                   >
                     Connexion
                   </button>
                   <a
                     href="#contact"
-                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     Prendre RDV
                   </a>
@@ -179,13 +179,13 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
                       onShowAuth();
                       setIsMenuOpen(false);
                     }}
-                    className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold text-center transition-colors"
+                    className="block w-full bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium text-center transition-all duration-300 shadow-sm hover:shadow-md"
                   >
                     Connexion
                   </button>
                   <a
                     href="#contact"
-                    className="block mt-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold text-center transition-colors"
+                    className="block mt-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 rounded-lg font-semibold text-center transition-all duration-300 shadow-lg hover:shadow-xl"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Prendre RDV
