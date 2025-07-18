@@ -27,18 +27,11 @@ const DebugSupabase: React.FC = () => {
 
       // 2. Test de connexion basique
       console.log('2️⃣ Test de connexion basique...');
-      if (supabase) {
-        const connectionTest = await testSupabaseConnection();
-        results.connection = {
-          status: connectionTest ? 'SUCCÈS' : 'ERREUR',
-          connected: connectionTest
-        };
-      } else {
-        results.connection = {
-          status: 'ERREUR',
-          error: 'Client Supabase non initialisé'
-        };
-      }
+      const connectionTest = await testSupabaseConnection();
+      results.connection = {
+        status: connectionTest ? 'SUCCÈS' : 'ERREUR',
+        connected: connectionTest
+      };
       console.log('🔗 Test de connexion:', results.connection);
 
       // 3. Test d'insertion

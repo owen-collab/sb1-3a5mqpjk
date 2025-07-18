@@ -27,8 +27,13 @@ const Contact: React.FC = () => {
   // Tester la connexion Supabase au chargement du composant
   React.useEffect(() => {
     const checkConnection = async () => {
-      const connected = await testSupabaseConnection();
-      setIsSupabaseConnected(connected);
+      try {
+        const connected = await testSupabaseConnection();
+        setIsSupabaseConnected(connected);
+      } catch (error) {
+        console.error('Erreur de connexion Supabase:', error);
+        setIsSupabaseConnected(false);
+      }
     };
     checkConnection();
   }, []);

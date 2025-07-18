@@ -17,29 +17,33 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     loadData();
     
-    // S'abonner aux changements en temps réel
-    const rendezVousSubscription = subscribeToRendezVous((payload) => {
-      setLastUpdate(new Date());
-      
-      // Compter les nouveaux rendez-vous
-      if (payload.eventType === 'INSERT') {
-        setNewRendezVousCount(prev => prev + 1);
-        // Réinitialiser le compteur après 5 secondes
-        setTimeout(() => setNewRendezVousCount(0), 5000);
-      }
-      
-      loadRendezVous();
-    });
+    try {
+      // S'abonner aux changements en temps réel
+      const rendezVousSubscription = subscribeToRendezVous((payload) => {
+        setLastUpdate(new Date());
+        
+        // Compter les nouveaux rendez-vous
+        if (payload.eventType === 'INSERT') {
+          setNewRendezVousCount(prev => prev + 1);
+          // Réinitialiser le compteur après 5 secondes
+          setTimeout(() => setNewRendezVousCount(0), 5000);
+        }
+        
+        loadRendezVous();
+      });
 
-    const paymentsSubscription = subscribeToPayments((payload) => {
-      setLastUpdate(new Date());
-      loadPayments();
-    });
+      const paymentsSubscription = subscribeToPayments((payload) => {
+        setLastUpdate(new Date());
+        loadPayments();
+      });
 
-    return () => {
-      rendezVousSubscription.unsubscribe();
-      paymentsSubscription.unsubscribe();
-    };
+      return () => {
+        rendezVousSubscription.unsubscribe();
+        paymentsSubscription.unsubscribe();
+      };
+    } catch (error) {
+      console.error('Erreur lors de l\'initialisation des subscriptions:', error);
+    }
   }, []);
 
   const loadData = async () => {

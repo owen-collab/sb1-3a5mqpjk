@@ -54,8 +54,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     setErrorMessage('');
 
     try {
+      if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+        throw new Error('Clés Stripe non configurées');
+      }
+
       const stripe = await loadStripe();
-      if (!stripe) throw new Error('Stripe non configuré');
+      if (!stripe) throw new Error('Erreur de chargement Stripe');
 
       // 1. Créer d'abord le rendez-vous
       const rendezVous = await rendezVousService.create({
