@@ -26,9 +26,13 @@ function App() {
   useEffect(() => {
     checkUser();
     
-    // Process notifications every 30 seconds
+    // Process notifications every 30 seconds (only if Supabase is configured)
     const notificationInterval = setInterval(() => {
-      notificationService.processNotifications();
+      try {
+        notificationService.processNotifications();
+      } catch (error) {
+        // Silently ignore if Supabase is not configured
+      }
     }, 30000);
 
     return () => clearInterval(notificationInterval);

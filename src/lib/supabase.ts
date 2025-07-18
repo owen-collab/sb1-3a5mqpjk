@@ -39,30 +39,28 @@ const validateSupabaseConfig = () => {
   const errors = [];
   
   if (!supabaseUrl) {
-    errors.push('VITE_SUPABASE_URL est manquant');
+    console.warn('⚠️ VITE_SUPABASE_URL est manquant - fonctionnalités limitées');
   } else if (!supabaseUrl.includes('supabase.co')) {
-    errors.push('VITE_SUPABASE_URL semble invalide (doit contenir "supabase.co")');
+    console.warn('⚠️ VITE_SUPABASE_URL semble invalide (doit contenir "supabase.co")');
   }
   
   if (!supabaseKey) {
-    errors.push('VITE_SUPABASE_ANON_KEY est manquant');
+    console.warn('⚠️ VITE_SUPABASE_ANON_KEY est manquant - fonctionnalités limitées');
   } else if (supabaseKey.length < 100) {
-    errors.push('VITE_SUPABASE_ANON_KEY semble invalide (trop court)');
+    console.warn('⚠️ VITE_SUPABASE_ANON_KEY semble invalide (trop court)');
   }
   
-  if (errors.length > 0) {
-    console.error('❌ Configuration Supabase invalide:');
-    errors.forEach(error => console.error(`  - ${error}`));
-    console.error('📋 Pour corriger:');
-    console.error('  1. Créez un fichier .env à la racine du projet');
-    console.error('  2. Ajoutez vos clés Supabase:');
-    console.error('     VITE_SUPABASE_URL=https://votre-projet.supabase.co');
-    console.error('     VITE_SUPABASE_ANON_KEY=votre_clé_anonyme');
-    console.error('  3. Redémarrez le serveur avec: npm run dev');
+  if (!supabaseUrl || !supabaseKey) {
+    console.info('ℹ️ Pour configurer Supabase:');
+    console.info('  1. Créez un fichier .env à la racine du projet');
+    console.info('  2. Ajoutez vos clés Supabase:');
+    console.info('     VITE_SUPABASE_URL=https://votre-projet.supabase.co');
+    console.info('     VITE_SUPABASE_ANON_KEY=votre_clé_anonyme');
+    console.info('  3. Redémarrez le serveur avec: npm run dev');
     return false;
   }
   
-  console.log('✅ Configuration Supabase valide');
+  console.info('✅ Configuration Supabase valide');
   return true;
 };
 
@@ -70,7 +68,7 @@ const validateSupabaseConfig = () => {
 let supabase: any = null;
 
 try {
-  if (validateSupabaseConfig()) {
+  if (supabaseUrl && supabaseKey && validateSupabaseConfig()) {
     supabase = createClient(supabaseUrl!, supabaseKey!, {
       auth: {
         autoRefreshToken: true,
@@ -83,10 +81,12 @@ try {
         }
       }
     });
-    console.log('✅ Client Supabase initialisé avec succès');
+    console.info('✅ Client Supabase initialisé avec succès');
+  } else {
+    console.info('ℹ️ Client Supabase non initialisé - variables d\'environnement manquantes');
   }
 } catch (error) {
-  console.error('❌ Erreur lors de l\'initialisation du client Supabase:', error);
+  console.warn('⚠️ Erreur lors de l\'initialisation du client Supabase:', error);
   supabase = null;
 }
 
