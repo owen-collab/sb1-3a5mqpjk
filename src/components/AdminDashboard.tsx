@@ -19,7 +19,6 @@ const AdminDashboard: React.FC = () => {
     
     // S'abonner aux changements en temps réel
     const rendezVousSubscription = subscribeToRendezVous((payload) => {
-      console.log('Changement rendez-vous:', payload);
       setLastUpdate(new Date());
       
       // Compter les nouveaux rendez-vous
@@ -33,7 +32,6 @@ const AdminDashboard: React.FC = () => {
     });
 
     const paymentsSubscription = subscribeToPayments((payload) => {
-      console.log('Changement paiement:', payload);
       setLastUpdate(new Date());
       loadPayments();
     });
@@ -57,10 +55,7 @@ const AdminDashboard: React.FC = () => {
 
   const loadRendezVous = async () => {
     try {
-      console.log('📊 Chargement des rendez-vous...');
       const data = await rendezVousService.getAll();
-      console.log('📈 Rendez-vous chargés:', data?.length || 0, 'éléments');
-      console.log('📋 Données:', data);
       setRendezVous(data || []);
     } catch (error) {
       console.error('Erreur lors du chargement des rendez-vous:', error);
@@ -69,9 +64,7 @@ const AdminDashboard: React.FC = () => {
 
   const loadPayments = async () => {
     try {
-      console.log('💳 Chargement des paiements...');
       const data = await paymentService.getAll();
-      console.log('💰 Paiements chargés:', data?.length || 0, 'éléments');
       setPayments(data || []);
     } catch (error) {
       console.error('Erreur lors du chargement des paiements:', error);

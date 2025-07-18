@@ -27,9 +27,7 @@ const Contact: React.FC = () => {
   // Tester la connexion Supabase au chargement du composant
   React.useEffect(() => {
     const checkConnection = async () => {
-      console.log('🔍 Vérification de la connexion Supabase...');
       const connected = await testSupabaseConnection();
-      console.log('📊 Résultat de la connexion:', connected ? '✅ Connecté' : '❌ Échec');
       setIsSupabaseConnected(connected);
     };
     checkConnection();
@@ -121,7 +119,6 @@ const Contact: React.FC = () => {
     try {
       if (requiresPayment) {
         // Ouvrir la modal de paiement
-        console.log('💰 Paiement requis, ouverture de la modal');
         setSelectedService(servicePrice);
         setShowPaymentModal(true);
         setIsSubmitting(false);
@@ -130,14 +127,11 @@ const Contact: React.FC = () => {
 
       if (isSupabaseConnected) {
         // Utiliser Supabase pour enregistrer le rendez-vous
-        console.log('💾 Enregistrement du rendez-vous dans Supabase...');
-        console.log('🔗 Supabase connecté:', isSupabaseConnected);
         
         const newRendezVous = await rendezVousService.create({
           ...formData,
           payment_status: paymentOption === 'now' ? 'paid' : 'pending'
         });
-        console.log('✅ Rendez-vous enregistré avec succès !', newRendezVous);
         
         // Message de succès personnalisé
         setSuccessMessage(
@@ -146,10 +140,7 @@ const Contact: React.FC = () => {
         );
       } else {
         // Simulation si Supabase n'est pas configuré
-        console.warn('⚠️ Supabase non configuré, simulation de l\'envoi');
-        console.log('🔄 Simulation en cours...');
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log('✅ Simulation terminée');
+        await new Promise(resolve => setTimeout(resolve, 800));
         
         setSuccessMessage(
           `Merci ${formData.nom} ! Votre demande a été simulée avec succès. ` +
@@ -176,11 +167,6 @@ const Contact: React.FC = () => {
       
     } catch (error) {
       console.error('Erreur lors de l\'envoi:', error);
-      console.error('📊 Détails de l\'erreur:', {
-        message: error instanceof Error ? error.message : 'Erreur inconnue',
-        stack: error instanceof Error ? error.stack : 'Pas de stack',
-        supabaseConnected: isSupabaseConnected
-      });
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
