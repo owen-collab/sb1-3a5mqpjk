@@ -152,7 +152,7 @@ const Chatbot: React.FC = () => {
       const timeGreeting = new Date().getHours() < 18 ? 'journée' : 'soirée';
       simulateTyping(() => {
         addBotMessage(
-          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? context.userName : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
+          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? context.userName : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd\'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
           [
             "Ma voiture a un problème",
             "Je veux un entretien",
@@ -196,7 +196,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('où') || message.includes('adresse') || message.includes('localisation') || message.includes('situé') || message.includes('comment venir')) {
       simulateTyping(() => {
         addBotMessage(
-          `Nous sommes très faciles à trouver ! ${getRandomEmoji('positive')}\n\n📍 **ADRESSE EXACTE** :\n🏢 **IN AUTO**\n📍 Rue PAU, Akwa\n🎯 **Repère principal** : En face d'AGROMAC\n🏪 À côté de la microfinance FIGEC\n🌍 Douala, Cameroun\n\n🚗 **ACCÈS FACILE** :\n• Parking gratuit disponible\n• Accessible en transport public\n• Proche du centre-ville d'Akwa\n• Visible depuis la rue principale\n\n🕒 **HORAIRES** :\n• Lundi à Samedi : 8h00 - 18h00\n• Dimanche : Fermé (sauf urgences)\n• Service d'urgence : 24h/24\n\n📞 **CONTACT DIRECT** :\n• Téléphone : (+237) 675 978 777\n• Email : infos@inauto.fr\n\nVous connaissez le quartier Akwa ?",
+          `Nous sommes très faciles à trouver ! ${getRandomEmoji('positive')}\n\n📍 **ADRESSE EXACTE** :\n🏢 **IN AUTO**\n📍 Rue PAU, Akwa\n🎯 **Repère principal** : En face d'AGROMAC\n🏪 À côté de la microfinance FIGEC\n🌍 Douala, Cameroun\n\n🚗 **ACCÈS FACILE** :\n• Parking gratuit disponible\n• Accessible en transport public\n• Proche du centre-ville d'Akwa\n• Visible depuis la rue principale\n\n🕒 **HORAIRES** :\n• Lundi à Samedi : 8h00 - 18h00\n• Dimanche : Fermé (sauf urgences)\n• Service d'urgence : 24h/24\n\n📞 **CONTACT DIRECT** :\n• Téléphone : (+237) 675 978 777\n• Email : infos@inauto.fr\n\nVous connaissez le quartier Akwa ?`,
           [
             "Je connais AGROMAC",
             "Comment y aller ?",
@@ -210,7 +210,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('problème') || message.includes('panne') || message.includes('souci') || message.includes('bug') || message.includes('ne marche pas') || message.includes('en panne')) {
       simulateTyping(() => {
         addBotMessage(
-          `Oh là là ! ${getRandomEmoji('thinking')} Un problème avec votre véhicule ? Ne vous inquiétez pas, on va résoudre ça ensemble !\n\n🔍 **DIAGNOSTIC RAPIDE** :\nRacontez-moi tout en détail :\n• Quels sont les symptômes exacts ?\n• Quand le problème apparaît-il ?\n• Des bruits particuliers ?\n• Des voyants allumés ?\n• Depuis quand ça dure ?\n\n⚡ **PROBLÈMES FRÉQUENTS** :\n🔴 Voyant moteur allumé\n🔴 Bruit au démarrage\n🔴 Problème de freinage\n🔴 Climatisation en panne\n🔴 Batterie faible\n🔴 Pneus usés\n\n🚨 **SERVICE D'URGENCE** :\nSi c'est urgent, appelez immédiatement :\n📞 (+237) 675 978 777\n\nDécrivez-moi votre problème, je vais vous orienter !",
+          `Oh là là ! ${getRandomEmoji('thinking')} Un problème avec votre véhicule ? Ne vous inquiétez pas, on va résoudre ça ensemble !\n\n🔍 **DIAGNOSTIC RAPIDE** :\nRacontez-moi tout en détail :\n• Quels sont les symptômes exacts ?\n• Quand le problème apparaît-il ?\n• Des bruits particuliers ?\n• Des voyants allumés ?\n• Depuis quand ça dure ?\n\n⚡ **PROBLÈMES FRÉQUENTS** :\n🔴 Voyant moteur allumé\n🔴 Bruit au démarrage\n🔴 Problème de freinage\n🔴 Climatisation en panne\n🔴 Batterie faible\n🔴 Pneus usés\n\n🚨 **SERVICE D'URGENCE** :\nSi c\'est urgent, appelez immédiatement :\n📞 (+237) 675 978 777\n\nDécrivez-moi votre problème, je vais vous orienter !`,
           [
             "Voyant moteur allumé",
             "Bruit étrange",
@@ -238,7 +238,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('horaire') || message.includes('ouvert') || message.includes('fermé') || message.includes('quand') || message.includes('heure')) {
       simulateTyping(() => {
         addBotMessage(
-          `Nos horaires ? ${getRandomEmoji('positive')} On est là pour vous quand vous en avez besoin !\n\n🕒 **HORAIRES NORMAUX** :\n📅 **Lundi à Samedi** : 8h00 - 18h00\n🚫 **Dimanche** : Fermé (repos bien mérité ! 😴)\n\n🚨 **MAIS ATTENTION** :\n⚡ **Service d'urgence 24h/24** !\nPanne en pleine nuit ? Week-end ? On est là ! 💪\n\n📞 **URGENCES** : (+237) 675 978 777\n\n⏰ **CRÉNEAUX POPULAIRES** :\n• 8h00-10h00 : Moins d'attente\n• 14h00-16h00 : Idéal pour RDV\n• 16h00-18h00 : Service express\n\n🎯 **CONSEIL** : Réservez votre créneau pour éviter l'attente !\n\nQuand souhaitez-vous venir ?",
+          `Nos horaires ? ${getRandomEmoji('positive')} On est là pour vous quand vous en avez besoin !\n\n🕒 **HORAIRES NORMAUX** :\n📅 **Lundi à Samedi** : 8h00 - 18h00\n🚫 **Dimanche** : Fermé (repos bien mérité ! 😴)\n\n🚨 **MAIS ATTENTION** :\n⚡ **Service d'urgence 24h/24** !\nPanne en pleine nuit ? Week-end ? On est là ! 💪\n\n📞 **URGENCES** : (+237) 675 978 777\n\n⏰ **CRÉNEAUX POPULAIRES** :\n• 8h00-10h00 : Moins d'attente\n• 14h00-16h00 : Idéal pour RDV\n• 16h00-18h00 : Service express\n\n🎯 **CONSEIL** : Réservez votre créneau pour éviter l'attente !\n\nQuand souhaitez-vous venir ?`,
           [
             "Aujourd'hui",
             "Cette semaine",
@@ -251,7 +251,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('équipe') || message.includes('technicien') || message.includes('mécanicien') || message.includes('qui') || message.includes('staff')) {
       simulateTyping(() => {
         addBotMessage(
-          `Notre équipe ? ${getRandomEmoji('positive')} C'est notre fierté ! Des vrais passionnés d'automobile !\n\n👨‍🔧 **NOS EXPERTS** :\n✅ Techniciens certifiés multi-marques\n🎓 Formation continue sur les nouvelles technologies\n💡 Spécialistes en diagnostic électronique\n🛠️ Maîtrise des systèmes modernes et classiques\n🏆 Plus de 10 ans d'expérience moyenne\n\n❤️ **NOTRE PHILOSOPHIE** :\n• Passion pour l'automobile\n• Transparence totale avec les clients\n• Explications claires et détaillées\n• Conseils honnêtes et personnalisés\n• Respect des délais annoncés\n\n🎯 **SPÉCIALITÉS DE L'ÉQUIPE** :\n• Diagnostic électronique avancé\n• Systèmes de climatisation\n• Mécanique générale\n• Géométrie de précision\n• Freinage haute performance\n\nVous voulez rencontrer l'équipe ?",
+          `Notre équipe ? ${getRandomEmoji('positive')} C'est notre fierté ! Des vrais passionnés d\'automobile !\n\n👨‍🔧 **NOS EXPERTS** :\n✅ Techniciens certifiés multi-marques\n🎓 Formation continue sur les nouvelles technologies\n💡 Spécialistes en diagnostic électronique\n🛠️ Maîtrise des systèmes modernes et classiques\n🏆 Plus de 10 ans d'expérience moyenne\n\n❤️ **NOTRE PHILOSOPHIE** :\n• Passion pour l\'automobile\n• Transparence totale avec les clients\n• Explications claires et détaillées\n• Conseils honnêtes et personnalisés\n• Respect des délais annoncés\n\n🎯 **SPÉCIALITÉS DE L'ÉQUIPE** :\n• Diagnostic électronique avancé\n• Systèmes de climatisation\n• Mécanique générale\n• Géométrie de précision\n• Freinage haute performance\n\nVous voulez rencontrer l\'équipe ?`,
           [
             "Impressionnant !",
             "Leurs spécialités",
@@ -264,7 +264,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('garantie') || message.includes('assurance') || message.includes('sûr') || message.includes('protection')) {
       simulateTyping(() => {
         addBotMessage(
-          `La garantie ? ${getRandomEmoji('positive')} C'est notre engagement envers vous !\n\n🛡️ **NOTRE PROMESSE GARANTIE** :\n• **6 mois** sur toutes interventions\n• **12 mois** sur pièces majeures\n• **Pièces d'origine** ou équivalent constructeur\n• **Main d'œuvre** incluse dans la garantie\n\n💪 **SI ÇA NE VA PAS** :\n✅ Reprise GRATUITE du travail\n✅ Remplacement des pièces défectueuses\n✅ Aucun frais supplémentaire\n✅ Satisfaction garantie à 100%\n\n📋 **CE QUI EST COUVERT** :\n• Défauts de fabrication des pièces\n• Erreurs de montage\n• Dysfonctionnements liés à l'intervention\n• Usure prématurée anormale\n\n🎯 **NOTRE ENGAGEMENT** :\n"Votre tranquillité d'esprit est notre priorité"\n\nC'est ça, la confiance IN AUTO ! Des questions sur nos garanties ?",
+          `La garantie ? ${getRandomEmoji('positive')} C'est notre engagement envers vous !\n\n🛡️ **NOTRE PROMESSE GARANTIE** :\n• **6 mois** sur toutes interventions\n• **12 mois** sur pièces majeures\n• **Pièces d'origine** ou équivalent constructeur\n• **Main d'œuvre** incluse dans la garantie\n\n💪 **SI ÇA NE VA PAS** :\n✅ Reprise GRATUITE du travail\n✅ Remplacement des pièces défectueuses\n✅ Aucun frais supplémentaire\n✅ Satisfaction garantie à 100%\n\n📋 **CE QUI EST COUVERT** :\n• Défauts de fabrication des pièces\n• Erreurs de montage\n• Dysfonctionnements liés à l'intervention\n• Usure prématurée anormale\n\n🎯 **NOTRE ENGAGEMENT** :\n"Votre tranquillité d'esprit est notre priorité"\n\nC'est ça, la confiance IN AUTO ! Des questions sur nos garanties ?`,
           [
             "C'est rassurant !",
             "Pièces d'origine ?",
@@ -277,7 +277,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('urgent') || message.includes('urgence') || message.includes('vite') || message.includes('rapidement') || message.includes('emergency')) {
       simulateTyping(() => {
         addBotMessage(
-          `Urgence ? ${getRandomEmoji('thinking')} On comprend, c'est stressant quand la voiture nous lâche !\n\n🚨 **SERVICE D'URGENCE 24h/24** :\n📞 **APPELEZ IMMÉDIATEMENT** : (+237) 675 978 777\n⚡ **Intervention rapide** possible\n🔧 **Dépannage sur route** disponible\n🏥 **Diagnostic express** en 15 minutes\n\n⚠️ **EN ATTENDANT NOTRE INTERVENTION** :\n• Mettez-vous en sécurité\n• N'insistez pas si le moteur force\n• Notez tous les symptômes\n• Allumez vos feux de détresse\n\n🎯 **TYPES D'URGENCES TRAITÉES** :\n• Panne sur route\n• Problème de démarrage\n• Surchauffe moteur\n• Problème de freinage\n• Batterie à plat\n• Crevaison\n\n**On arrive !** ${getRandomEmoji('service')}",
+          `Urgence ? ${getRandomEmoji('thinking')} On comprend, c'est stressant quand la voiture nous lâche !\n\n🚨 **SERVICE D\'URGENCE 24h/24** :\n📞 **APPELEZ IMMÉDIATEMENT** : (+237) 675 978 777\n⚡ **Intervention rapide** possible\n🔧 **Dépannage sur route** disponible\n🏥 **Diagnostic express** en 15 minutes\n\n⚠️ **EN ATTENDANT NOTRE INTERVENTION** :\n• Mettez-vous en sécurité\n• N'insistez pas si le moteur force\n• Notez tous les symptômes\n• Allumez vos feux de détresse\n\n🎯 **TYPES D\'URGENCES TRAITÉES** :\n• Panne sur route\n• Problème de démarrage\n• Surchauffe moteur\n• Problème de freinage\n• Batterie à plat\n• Crevaison\n\n**On arrive !** ${getRandomEmoji('service')}`,
           [
             "Appeler maintenant",
             "Dépannage sur route",
@@ -290,7 +290,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('conseil') || message.includes('recommandation') || message.includes('que faire') || message.includes('aide') || message.includes('astuce')) {
       simulateTyping(() => {
         addBotMessage(
-          `Vous voulez des conseils ? ${getRandomEmoji('positive')} J'adore ça ! Partager mon expertise, c'est ma passion !\n\n💡 **MES CONSEILS D'EXPERT** :\n\n🔧 **ENTRETIEN PRÉVENTIF** :\n• Vidange tous les 7500 km\n• Vérification mensuelle des niveaux\n• Contrôle pression pneus (2 semaines)\n• Révision annuelle complète\n\n⛽ **ÉCONOMISER LE CARBURANT** :\n• Conduite souple et anticipée\n• Pneus bien gonflés\n• Entretien régulier du moteur\n• Éviter les surcharges\n\n❄️ **PRÉPARER L'HIVER** :\n• Vérifier la batterie\n• Contrôler l'antigel\n• Pneus adaptés à la saison\n• Test du système de chauffage\n\n🛣️ **AVANT UN LONG VOYAGE** :\n• Révision complète\n• Vérification freinage\n• Contrôle éclairage\n• Kit de secours à bord\n\nSur quoi voulez-vous mes conseils spécifiques ?",
+          `Vous voulez des conseils ? ${getRandomEmoji('positive')} J'adore ça ! Partager mon expertise, c'est ma passion !\n\n💡 **MES CONSEILS D'EXPERT** :\n\n🔧 **ENTRETIEN PRÉVENTIF** :\n• Vidange tous les 7500 km\n• Vérification mensuelle des niveaux\n• Contrôle pression pneus (2 semaines)\n• Révision annuelle complète\n\n⛽ **ÉCONOMISER LE CARBURANT** :\n• Conduite souple et anticipée\n• Pneus bien gonflés\n• Entretien régulier du moteur\n• Éviter les surcharges\n\n❄️ **PRÉPARER L'HIVER** :\n• Vérifier la batterie\n• Contrôler l'antigel\n• Pneus adaptés à la saison\n• Test du système de chauffage\n\n🛣️ **AVANT UN LONG VOYAGE** :\n• Révision complète\n• Vérification freinage\n• Contrôle éclairage\n• Kit de secours à bord\n\nSur quoi voulez-vous mes conseils spécifiques ?`,
           [
             "Entretien préventif",
             "Économiser carburant",
@@ -313,7 +313,7 @@ const Chatbot: React.FC = () => {
       
       simulateTyping(() => {
         addBotMessage(
-          `Ah, vous aimez l'humour ! ${getRandomEmoji('positive')} Moi aussi ! Voici une petite blague auto :\n\n${randomJoke}\n\nAlors, ça vous a fait sourire ? 😊 Chez IN AUTO, on aime garder la bonne humeur même quand on parle mécanique !\n\nBon, revenons à nos voitures maintenant ! ${getRandomEmoji('car')}`,
+          `Ah, vous aimez l'humour ! ${getRandomEmoji(\'positive')} Moi aussi ! Voici une petite blague auto :\n\n${randomJoke}\n\nAlors, ça vous a fait sourire ? 😊 Chez IN AUTO, on aime garder la bonne humeur même quand on parle mécanique !\n\nBon, revenons à nos voitures maintenant ! ${getRandomEmoji('car')}`,
           [
             "Haha, pas mal ! 😄",
             "Encore une blague !",
@@ -326,7 +326,7 @@ const Chatbot: React.FC = () => {
     } else if (message.includes('au revoir') || message.includes('bye') || message.includes('à bientôt') || message.includes('tchao') || message.includes('salut')) {
       simulateTyping(() => {
         addBotMessage(
-          `Au revoir ${context.userName ? context.userName : ''} ! ${getRandomEmoji('positive')} C'était un plaisir de discuter avec vous !\n\n🚗 **N'OUBLIEZ PAS** :\n• Votre véhicule mérite le meilleur !\n• Nous sommes toujours là pour vous aider\n• Service d'urgence 24h/24 disponible\n\n💬 **REVENEZ QUAND VOUS VOULEZ** !\n📞 **En urgence** : (+237) 675 978 777\n📍 **Notre adresse** : Rue PAU, Akwa (face AGROMAC)\n\nPrenez soin de vous et de votre voiture ! À très bientôt chez IN AUTO ! ${getRandomEmoji('car')} ✨",
+          \`Au revoir ${context.userName ? context.userName : ''} ! ${getRandomEmoji('positive')} C'était un plaisir de discuter avec vous !\n\n🚗 **N\'OUBLIEZ PAS** :\n• Votre véhicule mérite le meilleur !\n• Nous sommes toujours là pour vous aider\n• Service d'urgence 24h/24 disponible\n\n💬 **REVENEZ QUAND VOUS VOULEZ** !\n📞 **En urgence** : (+237) 675 978 777\n📍 **Notre adresse** : Rue PAU, Akwa (face AGROMAC)\n\nPrenez soin de vous et de votre voiture ! À très bientôt chez IN AUTO ! ${getRandomEmoji(\'car')} ✨`,
           [
             "À bientôt Alex ! 👋",
             "Merci pour tout !",
