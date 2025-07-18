@@ -570,6 +570,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             )}
           </div>
 
+          </div>
+
           {/* Boutons d'action */}
           <div className="flex space-x-4">
             <button
