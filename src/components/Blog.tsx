@@ -4,6 +4,7 @@ import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
 
 const Blog: React.FC = () => {
   const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
+  const [showAllArticles, setShowAllArticles] = useState(false);
 
   const blogPosts = [
     {
@@ -251,7 +252,7 @@ const Blog: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
+          {(showAllArticles ? blogPosts : blogPosts.slice(0, 3)).map((post) => (
             <article
               key={post.id}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
@@ -300,8 +301,11 @@ const Blog: React.FC = () => {
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
-            Voir tous les articles
+          <button 
+            onClick={() => setShowAllArticles(!showAllArticles)}
+            className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
+          >
+            {showAllArticles ? 'Voir moins d\'articles' : 'Voir tous les articles'}
           </button>
         </div>
       </div>
