@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, AlertCircle, CheckCircle, Star, Award, Shield, Users } from 'lucide-react';
-import { supabase, rendezVousService, testSupabaseConnection } from '../lib/supabase';
+import { supabase, rendezVousService, testSupabaseConnection } from '../lib/supabase.tsx';
 import PaymentModal from './PaymentModal';
 import { getServicePrice, ServicePrice } from '../lib/stripe';
 
