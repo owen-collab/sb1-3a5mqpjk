@@ -36,7 +36,7 @@ const Blog: React.FC = () => {
           <li>Conseils personnalisés selon votre conduite</li>
         </ul>
       `,
-      image: "/101533631_103514974727319_4043303090290425856_n.jpg",
+      image: "/IMG-20250708-WA0029.jpg",
       date: "15 Mars 2024",
       author: "Expert Auto",
       category: "Sécurité",
@@ -237,79 +237,85 @@ const Blog: React.FC = () => {
   const handleCloseArticle = () => {
     setSelectedArticle(null);
   };
+
+  const toggleShowAllArticles = () => {
+    setShowAllArticles(!showAllArticles);
+  };
+
   return (
     <>
       <section id="blog" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-black mb-4">
-            Conseils & Actualités
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Restez informé avec nos derniers articles sur l'entretien automobile, 
-            les conseils de sécurité et les tendances du secteur.
-          </p>
-        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-black mb-4">
+              Conseils & Actualités
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Restez informé avec nos derniers articles sur l'entretien automobile, 
+              les conseils de sécurité et les tendances du secteur.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(showAllArticles ? blogPosts : blogPosts.slice(0, 3)).map((post) => (
-            <article
-              key={post.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {(showAllArticles ? blogPosts : blogPosts.slice(0, 3)).map((post) => (
+              <article
+                key={post.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(post.category)}`}>
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    <span className="mr-4">{post.date}</span>
+                    <Clock className="w-4 h-4 mr-1" />
+                    <span className="mr-4">{post.readTime}</span>
+                    <User className="w-4 h-4 mr-1" />
+                    <span>{post.author}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-black mb-3 line-clamp-2">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+
+                  <button 
+                    onClick={() => handleReadMore(post.id)}
+                    className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200"
+                  >
+                    Lire la suite
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <button 
+              onClick={toggleShowAllArticles}
+              className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
             >
-              <div className="relative overflow-hidden">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(post.category)}`}>
-                    {post.category}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <div className="flex items-center text-sm text-gray-500 mb-3">
-                  <Calendar className="w-4 h-4 mr-1" />
-                  <span className="mr-4">{post.date}</span>
-                  <Clock className="w-4 h-4 mr-1" />
-                  <span className="mr-4">{post.readTime}</span>
-                  <User className="w-4 h-4 mr-1" />
-                  <span>{post.author}</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-black mb-3 line-clamp-2">
-                  {post.title}
-                </h3>
-
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-
-                <button 
-                  onClick={() => handleReadMore(post.id)}
-                  className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200"
-                >
-                  Lire la suite
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
-              </div>
-            </article>
-          ))}
+              {showAllArticles ? 'Voir moins d\'articles' : 'Voir tous les articles'}
+            </button>
+          </div>
         </div>
-
-        <div className="text-center mt-12">
-          <button 
-            onClick={() => setShowAllArticles(!showAllArticles)}
-            className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
-          >
-            {showAllArticles ? 'Voir moins d\'articles' : 'Voir tous les articles'}
-          </button>
-        </div>
-      </div>
       </section>
+
       {/* Modal pour l'article complet */}
       {selectedArticle && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
