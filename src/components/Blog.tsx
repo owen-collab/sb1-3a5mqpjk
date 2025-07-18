@@ -287,7 +287,10 @@ const Blog: React.FC = () => {
                   {post.excerpt}
                 </p>
 
-                <button className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200">
+                <button 
+                  onClick={() => handleReadMore(post.id)}
+                  className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200"
+                >
                   Lire la suite
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
