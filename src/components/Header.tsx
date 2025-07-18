@@ -52,28 +52,28 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
             <div className="flex items-center space-x-3">
               <Link to="/">
                 <img 
-                  src="/438795906_1005039187770704_7882610973164968600_n.png" 
+                  src="/294960445_557556392518988_5899854189761142977_n.jpg" 
                   alt="IN AUTO Logo" 
-                  className="h-12 w-auto"
+                  className="h-16 w-auto"
                   loading="lazy"
                 />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-gray-700 hover:text-red-600 font-medium transition-colors"
+                  className="text-black hover:text-red-600 font-semibold transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50"
                 >
                   {item.label}
                 </a>
               ))}
               <Link
                 to="/admin"
-                className="text-gray-700 hover:text-red-600 font-medium transition-colors"
+                className="text-black hover:text-red-600 font-semibold transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-red-50"
               >
                 Admin
               </Link>
