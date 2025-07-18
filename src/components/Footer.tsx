@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
               <img 
                 src="/438795906_1005039187770704_7882610973164968600_n.png" 
                 alt="IN AUTO Logo" 
-                className="h-16 w-auto rounded-lg shadow-md"
+                className="h-12 w-auto"
                 loading="lazy"
               />
             </div>

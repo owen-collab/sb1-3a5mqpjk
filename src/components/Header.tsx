@@ -52,12 +52,9 @@ const Header: React.FC<HeaderProps> = ({ user, onShowAuth, onSignOut }) => {
             <div className="flex items-center space-x-3">
               <Link to="/">
                 <div className="flex items-center space-x-2">
-                  <img 
-                    src="/438795906_1005039187770704_7882610973164968600_n.png" 
-                    alt="IN AUTO Logo" 
-                    className="h-12 w-auto rounded-lg shadow-sm"
-                    loading="lazy"
-                  />
+                  <div className="bg-gradient-to-r from-black to-red-600 text-white px-4 py-2 rounded-lg font-bold text-xl">
+                    IN AUTO
+                  </div>
                 </div>
               </Link>
             </div>

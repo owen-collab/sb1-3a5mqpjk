@@ -8,14 +8,14 @@ const Testimonials: React.FC = () => {
       role: 'Directeur d\'entreprise',
       rating: 5,
       comment: 'Service exceptionnel ! L\'équipe d\'IN AUTO a diagnostiqué et réparé une panne complexe que d\'autres garages n\'arrivaient pas à résoudre. Transparence totale sur les prix et délais respectés. Je recommande vivement !',
-      image: '/101533631_103514974727319_4043303090290425856_n.jpg'
+      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
     },
     {
       name: 'Marie Ngono',
       role: 'Enseignante',
       rating: 5,
       comment: 'Enfin un garage qui prend le temps d\'expliquer ! Ils m\'ont montré exactement ce qui n\'allait pas avec photos à l\'appui. Travail impeccable et garantie respectée. Mon véhicule n\'a jamais été aussi bien entretenu.',
-      image: '/294960445_557556392518988_5899854189761142977_n.jpg'
+      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
     },
     {
       name: 'Paul Mballa',
@@ -82,13 +82,8 @@ const Testimonials: React.FC = () => {
                 "{testimonial.comment}"
               </p>
               <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border-2 border-gray-200">
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <div className="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                  {testimonial.name.charAt(0)}
                 </div>
                 <div>
                   <div className="font-semibold text-gray-800">{testimonial.name}</div>
