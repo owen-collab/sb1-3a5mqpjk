@@ -21,17 +21,25 @@ const DebugSupabase: React.FC = () => {
         supabaseUrl: import.meta.env.VITE_SUPABASE_URL || 'NON DÉFINI',
         supabaseKey: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'DÉFINI' : 'NON DÉFINI',
         hasClient: !!supabase,
-        urlValid: import.meta.env.VITE_SUPABASE_URL?.includes('supabase.co') || false
+        urlValid: import.meta.env.VITE_SUPABASE_URL?.includes('supabase.co') || false,
+        keyLength: import.meta.env.VITE_SUPABASE_ANON_KEY?.length || 0
       };
       console.log('📊 Variables d\'environnement:', results.env);
 
       // 2. Test de connexion basique
       console.log('2️⃣ Test de connexion basique...');
-      const connectionTest = await testSupabaseConnection();
-      results.connection = {
-        status: connectionTest ? 'SUCCÈS' : 'ERREUR',
-        connected: connectionTest
-      };
+      if (supabase) {
+        const connectionTest = await testSupabaseConnection();
+        results.connection = {
+          status: connectionTest ? 'SUCCÈS' : 'ERREUR',
+          connected: connectionTest
+        };
+      } else {
+        results.connection = {
+          status: 'ERREUR',
+          error: 'Client Supabase non initialisé - vérifiez vos variables d\'environnement'
+        };
+      }
       console.log('🔗 Test de connexion:', results.connection);
 
       // 3. Test d'insertion

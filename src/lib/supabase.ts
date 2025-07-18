@@ -12,6 +12,7 @@ export interface RendezVous {
   message?: string;
   status: 'nouveau' | 'confirme' | 'en_cours' | 'termine' | 'annule';
   payment_status: 'pending' | 'paid' | 'failed' | 'refunded';
+  user_id?: string;
   created_at: string;
   updated_at: string;
 }
@@ -33,38 +34,102 @@ export interface Payment {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Vérification des variables d'environnement
-if (!supabaseUrl || !supabaseKey) {
-  console.error('❌ Variables d\'environnement Supabase manquantes:');
-  console.error('VITE_SUPABASE_URL:', supabaseUrl ? '✅ Défini' : '❌ Manquant');
-  console.error('VITE_SUPABASE_ANON_KEY:', supabaseKey ? '✅ Défini' : '❌ Manquant');
+// Validation des variables d'environnement
+const validateSupabaseConfig = () => {
+  const errors = [];
+  
+  if (!supabaseUrl) {
+    errors.push('VITE_SUPABASE_URL est manquant');
+  } else if (!supabaseUrl.includes('supabase.co')) {
+    errors.push('VITE_SUPABASE_URL semble invalide (doit contenir "supabase.co")');
+  }
+  
+  if (!supabaseKey) {
+    errors.push('VITE_SUPABASE_ANON_KEY est manquant');
+  } else if (supabaseKey.length < 100) {
+    errors.push('VITE_SUPABASE_ANON_KEY semble invalide (trop court)');
+  }
+  
+  if (errors.length > 0) {
+    console.error('❌ Configuration Supabase invalide:');
+    errors.forEach(error => console.error(`  - ${error}`));
+    console.error('📋 Pour corriger:');
+    console.error('  1. Créez un fichier .env à la racine du projet');
+    console.error('  2. Ajoutez vos clés Supabase:');
+    console.error('     VITE_SUPABASE_URL=https://votre-projet.supabase.co');
+    console.error('     VITE_SUPABASE_ANON_KEY=votre_clé_anonyme');
+    console.error('  3. Redémarrez le serveur avec: npm run dev');
+    return false;
+  }
+  
+  console.log('✅ Configuration Supabase valide');
+  return true;
+};
+
+// Créer le client Supabase avec gestion d'erreurs
+let supabase: any = null;
+
+try {
+  if (validateSupabaseConfig()) {
+    supabase = createClient(supabaseUrl!, supabaseKey!, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+      },
+      realtime: {
+        params: {
+          eventsPerSecond: 10
+        }
+      }
+    });
+    console.log('✅ Client Supabase initialisé avec succès');
+  }
+} catch (error) {
+  console.error('❌ Erreur lors de l\'initialisation du client Supabase:', error);
+  supabase = null;
 }
 
-export const supabase = supabaseUrl && supabaseKey 
-  ? createClient(supabaseUrl, supabaseKey)
-  : null;
+export { supabase };
 
 // Test functions
 export const testSupabaseConnection = async (): Promise<boolean> => {
   if (!supabase) {
-    console.log('❌ Client Supabase non initialisé');
+    console.error('❌ Client Supabase non initialisé - vérifiez votre configuration');
     return false;
   }
 
   try {
+    console.log('🔍 Test de connexion Supabase...');
+    
+    // Test simple de connexion
+    const { data, error } = await supabase.auth.getSession();
+    
+    if (error && error.message.includes('Invalid API key')) {
+      console.error('❌ Clé API Supabase invalide');
+      return false;
+    }
+    
+    // Test d'accès à la base de données
     const { data, error } = await supabase
       .from('rendezvous')
       .select('count', { count: 'exact', head: true });
     
     if (error) {
-      console.error('❌ Erreur de connexion Supabase:', error);
+      console.error('❌ Erreur de connexion à la base de données:', error.message);
+      
+      if (error.message.includes('relation "rendezvous" does not exist')) {
+        console.error('💡 Solution: Exécutez les migrations SQL dans votre dashboard Supabase');
+      } else if (error.message.includes('JWT')) {
+        console.error('💡 Solution: Vérifiez votre clé ANON dans le dashboard Supabase');
+      }
       return false;
     }
     
-    console.log('✅ Connexion Supabase réussie');
+    console.log('✅ Connexion Supabase réussie - Base de données accessible');
     return true;
   } catch (error) {
-    console.error('❌ Erreur lors du test de connexion:', error);
+    console.error('❌ Erreur réseau lors du test de connexion:', error);
     return false;
   }
 };
@@ -73,6 +138,8 @@ export const testSupabaseInsert = async (): Promise<boolean> => {
   if (!supabase) return false;
 
   try {
+    console.log('🔍 Test d\'insertion en base...');
+    
     const testData = {
       nom: 'Test User',
       telephone: '+237600000000',
@@ -88,19 +155,26 @@ export const testSupabaseInsert = async (): Promise<boolean> => {
       .single();
 
     if (error) {
-      console.error('❌ Erreur d\'insertion:', error);
+      console.error('❌ Erreur d\'insertion:', error.message);
+      
+      if (error.message.includes('RLS')) {
+        console.error('💡 Solution: Vérifiez les politiques RLS dans votre dashboard Supabase');
+      } else if (error.message.includes('permission denied')) {
+        console.error('💡 Solution: Vérifiez les permissions de la table rendezvous');
+      }
       return false;
     }
 
     // Nettoyer le test
     if (data?.id) {
       await supabase.from('rendezvous').delete().eq('id', data.id);
+      console.log('🧹 Données de test nettoyées');
     }
 
-    console.log('✅ Test d\'insertion réussi');
+    console.log('✅ Test d\'insertion réussi - Permissions OK');
     return true;
   } catch (error) {
-    console.error('❌ Erreur lors du test d\'insertion:', error);
+    console.error('❌ Erreur réseau lors du test d\'insertion:', error);
     return false;
   }
 };
@@ -155,72 +229,115 @@ export const getSupabaseStats = async () => {
 // Services
 export const rendezVousService = {
   async getAll(): Promise<RendezVous[]> {
-    if (!supabase) throw new Error('Supabase non configuré');
+    if (!supabase) {
+      throw new Error('Supabase non configuré. Vérifiez vos variables d\'environnement et redémarrez le serveur.');
+    }
     
-    const { data, error } = await supabase
-      .from('rendezvous')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) throw error;
-    return data || [];
+    try {
+      const { data, error } = await supabase
+        .from('rendezvous')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Erreur lors de la récupération des rendez-vous:', error);
+        throw new Error(`Erreur base de données: ${error.message}`);
+      }
+      
+      return data || [];
+    } catch (error) {
+      console.error('Erreur réseau:', error);
+      throw error;
+    }
   },
 
   async create(rendezVous: Omit<RendezVous, 'id' | 'created_at' | 'updated_at'>): Promise<RendezVous> {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    // Vérifier la limite de rendez-vous par créneau (maximum 3)
-    if (rendezVous.date && rendezVous.heure) {
-      const { count, error: countError } = await supabase
-        .from('rendezvous')
-        .select('*', { count: 'exact', head: true })
-        .eq('date', rendezVous.date)
-        .eq('heure', rendezVous.heure)
-        .neq('status', 'annule'); // Exclure les rendez-vous annulés
-      
-      if (countError) {
-        console.error('Erreur lors de la vérification du créneau:', countError);
-        throw new Error('Erreur lors de la vérification de disponibilité du créneau');
-      }
-      
-      if (count && count >= 3) {
-        throw new Error('SLOT_FULL: Ce créneau horaire est complet (maximum 3 rendez-vous). Veuillez choisir un autre créneau.');
-      }
+    if (!supabase) {
+      throw new Error('Supabase non configuré. Vérifiez vos variables d\'environnement et redémarrez le serveur.');
     }
     
-    const { data, error } = await supabase
-      .from('rendezvous')
-      .insert([rendezVous])
-      .select()
-      .single();
-    
-    if (error) throw error;
-    return data;
+    try {
+      // Vérifier la limite de rendez-vous par créneau (maximum 3)
+      if (rendezVous.date && rendezVous.heure) {
+        const { count, error: countError } = await supabase
+          .from('rendezvous')
+          .select('*', { count: 'exact', head: true })
+          .eq('date', rendezVous.date)
+          .eq('heure', rendezVous.heure)
+          .neq('status', 'annule'); // Exclure les rendez-vous annulés
+        
+        if (countError) {
+          console.error('Erreur lors de la vérification du créneau:', countError);
+          throw new Error('Erreur lors de la vérification de disponibilité du créneau');
+        }
+        
+        if (count && count >= 3) {
+          throw new Error('SLOT_FULL: Ce créneau horaire est complet (maximum 3 rendez-vous). Veuillez choisir un autre créneau.');
+        }
+      }
+      
+      const { data, error } = await supabase
+        .from('rendezvous')
+        .insert([rendezVous])
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Erreur lors de la création du rendez-vous:', error);
+        throw new Error(`Erreur base de données: ${error.message}`);
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la création:', error);
+      throw error;
+    }
   },
 
   async update(id: string, updates: Partial<RendezVous>): Promise<RendezVous> {
-    if (!supabase) throw new Error('Supabase non configuré');
+    if (!supabase) {
+      throw new Error('Supabase non configuré. Vérifiez vos variables d\'environnement et redémarrez le serveur.');
+    }
     
-    const { data, error } = await supabase
-      .from('rendezvous')
-      .update(updates)
-      .eq('id', id)
-      .select()
-      .single();
-    
-    if (error) throw error;
-    return data;
+    try {
+      const { data, error } = await supabase
+        .from('rendezvous')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Erreur lors de la mise à jour:', error);
+        throw new Error(`Erreur base de données: ${error.message}`);
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour:', error);
+      throw error;
+    }
   },
 
   async delete(id: string): Promise<void> {
-    if (!supabase) throw new Error('Supabase non configuré');
+    if (!supabase) {
+      throw new Error('Supabase non configuré. Vérifiez vos variables d\'environnement et redémarrez le serveur.');
+    }
     
-    const { error } = await supabase
-      .from('rendezvous')
-      .delete()
-      .eq('id', id);
-    
-    if (error) throw error;
+    try {
+      const { error } = await supabase
+        .from('rendezvous')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Erreur lors de la suppression:', error);
+        throw new Error(`Erreur base de données: ${error.message}`);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression:', error);
+      throw error;
+    }
   }
 };
 
