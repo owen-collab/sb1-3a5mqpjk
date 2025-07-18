@@ -47,7 +47,7 @@ const Blog: React.FC = () => {
       id: 5,
       title: "Diagnostic moderne : technologie au service de votre auto",
       excerpt: "Comment nos équipements de diagnostic dernière génération révolutionnent l'entretien automobile.",
-      image: "/IMG-20250708-WA0006.jpg",
+      image: "/IMG-20250708-WA0029.jpg",
       date: "25 Février 2024",
       author: "Ingénieur Auto",
       category: "Technologie",
