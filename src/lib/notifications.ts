@@ -149,6 +149,7 @@ export const notificationService = {
       } catch (error) {
         console.error(`Error processing notification ${notification.id}:`, error);
         await this.markAsFailed(notification.id);
+      }
       console.warn('⚠️ Notifications désactivées - Supabase non configuré');
       return [];
     }
