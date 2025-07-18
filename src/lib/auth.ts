@@ -150,14 +150,20 @@ export const authService = {
     }
 
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      // First try to get the session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (error) {
-        console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+      if (sessionError) {
+        console.warn('Erreur lors de la récupération de la session:', sessionError);
+        return null;
+      }
+
+      // If no session, user is not authenticated
+      if (!session || !session.user) {
         return null;
       }
       
-      if (!user) return null;
+      const user = session.user;
 
       // Get user profile
       try {
