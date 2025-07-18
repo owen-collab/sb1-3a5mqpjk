@@ -108,7 +108,6 @@ export const authService = {
           throw new Error('Trop de tentatives de connexion. Veuillez patienter quelques minutes.');
         } else {
           throw new Error(`Erreur de connexion: ${error.message}`);
-          }
         }
       }
       
@@ -188,59 +187,6 @@ export const authService = {
       console.error('Erreur lors de la récupération de l\'utilisateur actuel:', error);
       return null;
     }
-  },
-
-  // Sign in with email and password
-  async signIn(email: string, password: string) {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-      
-      if (error) throw error;
-      
-      // Vérifier si la connexion a réussi
-      if (!data.user) {
-        throw new Error('Erreur lors de la connexion');
-      }
-      
-      return data;
-    } catch (error: any) {
-      console.error('Erreur lors de la connexion:', error);
-      throw error;
-    }
-  },
-
-  // Sign out
-  async signOut() {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-  },
-
-  // Get current user
-  async getCurrentUser(): Promise<AuthUser | null> {
-    if (!supabase) throw new Error('Supabase non configuré');
-    
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return null;
-
-    // Get user profile
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
-
-    return {
-      id: user.id,
-      email: user.email || '',
-      profile: profile || undefined
-    };
   },
 
   // Update user profile
