@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Users, CreditCard, TrendingUp, Eye, Edit, Trash2, Phone, Mail, Clock, CheckCircle, XCircle, AlertCircle, Filter, Search, Download, RefreshCw } from 'lucide-react';
-import { supabase, rendezVousService, paymentService, subscribeToRendezVous, subscribeToPayments, RendezVous, Payment } from '../lib/supabase.tsx';
+import { supabase, rendezVousService, paymentService, subscribeToRendezVous, subscribeToPayments, RendezVous, Payment } from '../lib/supabase';
 
 const AdminDashboard: React.FC = () => {
   const [rendezVous, setRendezVous] = useState<RendezVous[]>([]);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, CreditCard, Shield, Clock, CheckCircle, AlertCircle, Loader2, Smartphone, Wifi, Phone, DollarSign, Info } from 'lucide-react';
 import { loadStripe, ServicePrice } from '../lib/stripe';
-import { supabase, rendezVousService, paymentService } from '../lib/supabase.tsx';
+import { supabase, rendezVousService, paymentService } from '../lib/supabase';
 import { mobilePayment, mobilePaymentProviders, MobilePaymentRequest } from '../lib/mobilePayment';
 
 interface PaymentModalProps {
