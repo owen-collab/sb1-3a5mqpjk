@@ -152,7 +152,7 @@ const Chatbot: React.FC = () => {
       const timeGreeting = new Date().getHours() < 18 ? 'journée' : 'soirée';
       simulateTyping(() => {
         addBotMessage(
-          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? `${context.userName}` : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
+          `${getPersonalizedGreeting()} Excellente ${timeGreeting} ${context.userName ? `${context.userName}` : 'à vous'} ! ${getRandomEmoji('positive')}\n\nJe suis ravi de vous rencontrer ! Chez IN AUTO, on adore discuter avec nos clients. Votre véhicule va bien ? Qu'est-ce qui vous amène aujourd\'hui ?\n\nJe peux vous aider avec :\n• Prise de rendez-vous\n• Informations sur nos services\n• Conseils techniques\n• Tarifs et devis\n• Localisation du garage`,
           [
             "Ma voiture a un problème",
             "Je veux un entretien",
