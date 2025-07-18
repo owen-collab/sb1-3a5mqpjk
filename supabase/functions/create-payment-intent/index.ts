@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import Stripe from 'https://esm.sh/stripe@14.21.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -54,39 +55,37 @@ serve(async (req) => {
       throw new Error('Rendez-vous not found')
     }
 
-    // Ici, vous intégreriez Stripe pour créer un PaymentIntent réel
-    // const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!)
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: amount,
-    //   currency: currency.toLowerCase(),
-    //   metadata: {
-    //     rendezvous_id: rendezvous_id,
-    //     customer_name: customer_info.nom,
-    //     customer_phone: customer_info.telephone,
-    //   },
-    // })
+    // Créer un PaymentIntent Stripe réel
+    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
+      apiVersion: '2023-10-16',
+    })
 
-    // Pour la démonstration, on simule une réponse Stripe
-    const mockPaymentIntent = {
-      id: `pi_${Date.now()}`,
-      client_secret: `pi_${Date.now()}_secret_${Math.random().toString(36).substr(2, 9)}`,
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
-      currency: currency,
-      status: 'requires_payment_method',
-    }
+      currency: currency.toLowerCase(),
+      automatic_payment_methods: {
+        enabled: true,
+      },
+      metadata: {
+        rendezvous_id: rendezvous_id,
+        customer_name: customer_info.nom,
+        customer_phone: customer_info.telephone,
+        service_type: 'automotive_service',
+      },
+    })
 
     // Enregistrer le paiement en base
     const { data: payment, error: paymentError } = await supabase
       .from('payments')
       .insert({
         rendezvous_id: rendezvous_id,
-        stripe_payment_id: mockPaymentIntent.id,
+        stripe_payment_id: paymentIntent.id,
         amount: amount,
         currency: currency,
         status: 'pending',
         metadata: {
           customer_info: customer_info,
-          payment_intent_id: mockPaymentIntent.id,
+          payment_intent_id: paymentIntent.id,
         },
       })
       .select()
@@ -100,7 +99,13 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        payment_intent: mockPaymentIntent,
+        payment_intent: {
+          id: paymentIntent.id,
+          client_secret: paymentIntent.client_secret,
+          amount: paymentIntent.amount,
+          currency: paymentIntent.currency,
+          status: paymentIntent.status,
+        },
         payment_id: payment.id,
       }),
       {

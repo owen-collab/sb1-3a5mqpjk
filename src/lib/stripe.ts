@@ -1,7 +1,7 @@
 // Configuration Stripe
 const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_your_stripe_publishable_key';
 
-export const getStripe = async () => {
+export const loadStripe = async () => {
   const { loadStripe } = await import('@stripe/stripe-js');
   return loadStripe(stripePublishableKey);
 };

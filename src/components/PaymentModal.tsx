@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, CreditCard, Shield, Clock, CheckCircle, AlertCircle, Loader2, Smartphone, Wifi, Phone, DollarSign, Info } from 'lucide-react';
-import { getStripe, ServicePrice } from '../lib/stripe';
+import { loadStripe, ServicePrice } from '../lib/stripe';
 import { supabase, rendezVousService, paymentService } from '../lib/supabase';
 import { mobilePayment, mobilePaymentProviders, MobilePaymentRequest } from '../lib/mobilePayment';
 
@@ -54,6 +54,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     setErrorMessage('');
 
     try {
+      const stripe = await loadStripe();
+      if (!stripe) throw new Error('Stripe non configuré');
+
       // 1. Créer d'abord le rendez-vous
       const rendezVous = await rendezVousService.create({
         nom: customerInfo.nom,
@@ -63,9 +66,22 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         payment_status: 'pending'
       });
 
-      // 2. Créer l'enregistrement de paiement
+      // 2. Créer PaymentIntent via edge function
+      const { data: paymentIntent } = await supabase.functions.invoke('create-payment-intent', {
+        body: {
+          amount: service.price,
+          currency: 'XAF',
+          rendezvous_id: rendezVous.id,
+          customer_info: customerInfo
+        }
+      });
+
+      if (!paymentIntent.success) throw new Error(paymentIntent.error);
+
+      // 3. Créer l'enregistrement de paiement
       const payment = await paymentService.create({
         rendezvous_id: rendezVous.id,
+        stripe_payment_id: paymentIntent.payment_intent.id,
         amount: service.price,
         currency: 'XAF',
         status: 'pending',
@@ -76,16 +92,43 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         }
       });
 
-      // 3. Simulation du traitement Stripe
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // 4. Confirmer le paiement avec Stripe
+      const { error: stripeError } = await stripe.confirmCardPayment(
+        paymentIntent.payment_intent.client_secret,
+        {
+          payment_method: {
+            card: {
+              number: '4242424242424242',
+              exp_month: 12,
+              exp_year: 2025,
+              cvc: '123'
+            },
+            billing_details: {
+              name: customerInfo.nom,
+              email: customerInfo.email,
+              phone: customerInfo.telephone
+            }
+          }
+        }
+      );
 
-      // 4. Mettre à jour le statut du paiement
-      await paymentService.update(payment.id, {
-        status: 'succeeded',
-        stripe_payment_id: `pay_${Date.now()}`
+      if (stripeError) throw new Error(stripeError.message);
+
+      // 5. Confirmer via edge function
+      await supabase.functions.invoke('confirm-payment', {
+        body: {
+          payment_intent_id: paymentIntent.payment_intent.id,
+          payment_method: 'card'
+        }
       });
 
-      // 5. Mettre à jour le statut du rendez-vous
+      // 6. Mettre à jour le statut du paiement
+      await paymentService.update(payment.id, {
+        status: 'succeeded',
+        stripe_payment_id: paymentIntent.payment_intent.id
+      });
+
+      // 7. Mettre à jour le statut du rendez-vous
       await rendezVousService.update(rendezVous.id, {
         payment_status: 'paid',
         status: 'confirme'

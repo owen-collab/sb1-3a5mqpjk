@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import Stripe from 'https://esm.sh/stripe@14.21.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -48,16 +49,15 @@ serve(async (req) => {
       throw new Error('Payment not found')
     }
 
-    // Ici, vous confirmeriez le paiement avec Stripe
-    // const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!)
-    // const confirmedPayment = await stripe.paymentIntents.confirm(payment_intent_id)
+    // Confirmer le paiement avec Stripe
+    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
+      apiVersion: '2023-10-16',
+    })
 
-    // Pour la démonstration, on simule une confirmation réussie
-    const mockConfirmedPayment = {
-      id: payment_intent_id,
-      status: 'succeeded',
-      amount: payment.amount,
-      currency: payment.currency,
+    const confirmedPayment = await stripe.paymentIntents.retrieve(payment_intent_id)
+
+    if (confirmedPayment.status !== 'succeeded') {
+      throw new Error(`Payment not completed. Status: ${confirmedPayment.status}`)
     }
 
     // Mettre à jour le statut du paiement
@@ -92,7 +92,12 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        payment: mockConfirmedPayment,
+        payment: {
+          id: confirmedPayment.id,
+          status: confirmedPayment.status,
+          amount: confirmedPayment.amount,
+          currency: confirmedPayment.currency,
+        },
         rendezvous_id: payment.rendezvous_id,
         message: 'Payment confirmed successfully',
       }),
