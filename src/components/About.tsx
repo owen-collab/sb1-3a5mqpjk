@@ -72,7 +72,7 @@ const About: React.FC = () => {
           </div>
           <div>
             <img 
-              src="/294960445_557556392518988_5899854189761142977_n.jpg" 
+              src="/438795906_1005039187770704_7882610973164968600_n.png" 
               alt="Équipe IN AUTO - Garage professionnel Douala" 
               className="rounded-lg shadow-lg w-full h-64 object-cover"
               loading="lazy"

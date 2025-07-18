@@ -8,42 +8,42 @@ const Testimonials: React.FC = () => {
       role: 'Directeur d\'entreprise',
       rating: 5,
       comment: 'Service exceptionnel ! L\'équipe d\'IN AUTO a diagnostiqué et réparé une panne complexe que d\'autres garages n\'arrivaient pas à résoudre. Transparence totale sur les prix et délais respectés. Je recommande vivement !',
-      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/IMG-20250708-WA0007.jpg'
     },
     {
       name: 'Marie Ngono',
       role: 'Enseignante',
       rating: 5,
       comment: 'Enfin un garage qui prend le temps d\'expliquer ! Ils m\'ont montré exactement ce qui n\'allait pas avec photos à l\'appui. Travail impeccable et garantie respectée. Mon véhicule n\'a jamais été aussi bien entretenu.',
-      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/IMG-20250708-WA0024.jpg'
     },
     {
       name: 'Paul Mballa',
       role: 'Cadre commercial',
       rating: 5,
       comment: 'Équipe très professionnelle et accueillante. Ils ont réparé ma climatisation en moins de 2 heures et à un prix très raisonnable. L\'atelier est propre et bien équipé. Je reviendrai certainement !',
-      image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/IMG-20250708-WA0029.jpg'
     },
     {
       name: 'Brigitte Fosso',
       role: 'Gérante de flotte',
       rating: 5,
       comment: 'Service de qualité pour mes véhicules de société. Ils gèrent parfaitement ma flotte de 5 véhicules avec des tarifs préférentiels et un suivi rigoureux. Facturation claire et interventions rapides.',
-      image: 'https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/477255297_1218926753048612_1400709284416765383_n.jpg'
     },
     {
       name: 'Michel Biya',
       role: 'Chauffeur professionnel',
       rating: 5,
       comment: 'Excellent service ! Diagnostic précis et réparation rapide. L\'équipe est très compétente et honnête. Ils m\'ont évité une réparation coûteuse inutile. Merci pour votre professionnalisme.',
-      image: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/476816430_1217676996506921_5850932570678506571_n.jpg'
     },
     {
       name: 'Célestine Momo',
       role: 'Fonctionnaire',
       rating: 5,
       comment: 'Je suis cliente depuis 3 ans et je n\'ai jamais été déçue. Service client exceptionnel, conseils avisés et tarifs justes. IN AUTO est devenu mon garage de confiance à Douala.',
-      image: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=60&h=60&dpr=2'
+      image: '/294960445_557556392518988_5899854189761142977_n.jpg'
     }
   ];
 

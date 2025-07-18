@@ -7,7 +7,7 @@ const Blog: React.FC = () => {
       id: 1,
       title: "Les 5 signes qu'il est temps de changer vos pneus",
       excerpt: "Découvrez comment identifier quand vos pneus ont besoin d'être remplacés pour votre sécurité.",
-      image: "https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/101533631_103514974727319_4043303090290425856_n.jpg",
       date: "15 Mars 2024",
       author: "Expert Auto",
       category: "Sécurité",
@@ -17,7 +17,7 @@ const Blog: React.FC = () => {
       id: 2,
       title: "Entretien hivernal : préparez votre véhicule",
       excerpt: "Guide complet pour préparer votre voiture aux conditions hivernales difficiles.",
-      image: "https://images.pexels.com/photos/1118448/pexels-photo-1118448.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/294960445_557556392518988_5899854189761142977_n.jpg",
       date: "10 Mars 2024",
       author: "Mécanicien Pro",
       category: "Entretien",
@@ -27,11 +27,41 @@ const Blog: React.FC = () => {
       id: 3,
       title: "Économisez sur l'entretien de votre voiture",
       excerpt: "Astuces et conseils pour réduire les coûts d'entretien sans compromettre la qualité.",
-      image: "https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "/476816430_1217676996506921_5850932570678506571_n.jpg",
       date: "5 Mars 2024",
       author: "Conseiller Auto",
       category: "Économie",
       readTime: "6 min"
+    },
+    {
+      id: 4,
+      title: "Maintenance préventive : la clé de la longévité",
+      excerpt: "Découvrez l'importance de la maintenance préventive pour prolonger la vie de votre véhicule.",
+      image: "/477255297_1218926753048612_1400709284416765383_n.jpg",
+      date: "1 Mars 2024",
+      author: "Technicien Expert",
+      category: "Maintenance",
+      readTime: "8 min"
+    },
+    {
+      id: 5,
+      title: "Diagnostic moderne : technologie au service de votre auto",
+      excerpt: "Comment nos équipements de diagnostic dernière génération révolutionnent l'entretien automobile.",
+      image: "/IMG-20250708-WA0006.jpg",
+      date: "25 Février 2024",
+      author: "Ingénieur Auto",
+      category: "Technologie",
+      readTime: "5 min"
+    },
+    {
+      id: 6,
+      title: "Atelier moderne : un environnement professionnel",
+      excerpt: "Découvrez notre atelier équipé des dernières technologies pour un service de qualité.",
+      image: "/IMG-20250708-WA0003.jpg",
+      date: "20 Février 2024",
+      author: "Direction IN AUTO",
+      category: "Atelier",
+      readTime: "4 min"
     }
   ];
 
@@ -43,6 +73,12 @@ const Blog: React.FC = () => {
         return 'bg-gray-100 text-gray-800';
       case 'Économie':
         return 'bg-black text-white';
+      case 'Maintenance':
+        return 'bg-purple-100 text-purple-800';
+      case 'Technologie':
+        return 'bg-blue-100 text-blue-800';
+      case 'Atelier':
+        return 'bg-green-100 text-green-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
