@@ -129,8 +129,25 @@ const Chatbot: React.FC = () => {
       setContext(prev => ({ ...prev, userName }));
     }
 
-    // Réponses conversationnelles avancées
-    if (message.includes('bonjour') || message.includes('salut') || message.includes('hello') || message.includes('bonsoir')) {
+    // Services - réponse détaillée et complète
+    if (message.includes('service') || message.includes('parle-moi de vos services') || message.includes('voir vos services')) {
+      simulateTyping(() => {
+        addBotMessage(
+          `Excellente question ! ${getRandomEmoji('positive')} Chez IN AUTO, nous proposons une gamme complète de services automobiles :\n\n🔧 **NOS SERVICES PRINCIPAUX :**\n\n⚡ **Diagnostic Électronique** - 15 000 FCFA\n• Valise professionnelle dernière génération\n• Identification précise des pannes\n• Rapport détaillé avec conseils\n\n🛠️ **Vidange + Entretien** - 35 000 FCFA\n• Huile moteur premium\n• Changement filtres (huile, air)\n• Vérification 20 points\n\n❄️ **Climatisation** - 25 000 FCFA\n• Recharge gaz R134a\n• Nettoyage évaporateur\n• Test étanchéité complet\n\n🛡️ **Système de Freinage** - 45 000 FCFA\n• Plaquettes et disques\n• Liquide de frein\n• Test performance sécurité\n\n🚗 **Pneus + Géométrie** - 15 000 FCFA\n• Montage et équilibrage\n• Géométrie 4 roues\n• Contrôle pression\n\n🔧 **Révision Complète** - 75 000 FCFA\n• Contrôle 50 points\n• Vidange complète\n• Rapport détaillé\n\n✨ **GARANTIES :**\n• 6 mois sur toutes interventions\n• Pièces d'origine uniquement\n• Devis gratuit avant travaux\n\nQuel service vous intéresse le plus ?`,
+          [
+            "Diagnostic électronique",
+            "Vidange + entretien",
+            "Climatisation",
+            "Freinage",
+            "Pneus + géométrie",
+            "Révision complète",
+            "Prendre rendez-vous",
+            "Voir les tarifs"
+          ],
+          'service'
+        );
+      });
+    } else if (message.includes('bonjour') || message.includes('salut') || message.includes('hello') || message.includes('bonsoir')) {
       const timeGreeting = new Date().getHours() < 18 ? 'journée' : 'soirée';
       simulateTyping(() => {
         addBotMessage(
@@ -138,6 +155,7 @@ const Chatbot: React.FC = () => {
           [
             "Ma voiture a un problème",
             "Je veux un entretien",
+            "Voir vos services",
             "Juste des infos",
             "Tu es sympa ! 😊"
           ]
