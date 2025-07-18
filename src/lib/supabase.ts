@@ -111,16 +111,16 @@ export const testSupabaseConnection = async (): Promise<boolean> => {
     }
     
     // Test d'accès à la base de données
-    const { data, error } = await supabase
+    const { data: dbData, error: dbError } = await supabase
       .from('rendezvous')
       .select('count', { count: 'exact', head: true });
     
-    if (error) {
-      console.error('❌ Erreur de connexion à la base de données:', error.message);
+    if (dbError) {
+      console.error('❌ Erreur de connexion à la base de données:', dbError.message);
       
-      if (error.message.includes('relation "rendezvous" does not exist')) {
+      if (dbError.message.includes('relation "rendezvous" does not exist')) {
         console.error('💡 Solution: Exécutez les migrations SQL dans votre dashboard Supabase');
-      } else if (error.message.includes('JWT')) {
+      } else if (dbError.message.includes('JWT')) {
         console.error('💡 Solution: Vérifiez votre clé ANON dans le dashboard Supabase');
       }
       return false;
