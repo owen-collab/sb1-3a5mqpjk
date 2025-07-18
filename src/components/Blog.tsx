@@ -17,7 +17,7 @@ const Blog: React.FC = () => {
       id: 2,
       title: "Entretien hivernal : préparez votre véhicule",
       excerpt: "Guide complet pour préparer votre voiture aux conditions hivernales difficiles.",
-      image: "/IMG-20250708-WA0029 copy.jpg",
+      image: "/IMG-20250708-WA0007.jpg",
       date: "10 Mars 2024",
       author: "Mécanicien Pro",
       category: "Entretien",
