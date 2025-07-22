@@ -79,7 +79,10 @@ export const notificationService = {
 
   // Get pending notifications
   async getPending() {
-    if (!supabase) throw new Error('Supabase non configuré');
+    if (!supabase) {
+      console.warn('⚠️ Supabase non configuré - notifications désactivées');
+      return [];
+    }
     
     const { data, error } = await supabase
       .from('notifications')
@@ -127,31 +130,37 @@ export const notificationService = {
 
   // Simulate sending notifications (replace with real email/SMS service)
   async processNotifications() {
-    const pending = await this.getPending();
-    
-    for (const notification of pending) {
-      try {
-        // Simulate email/SMS sending
-        console.log(`Sending ${notification.type}:`, notification.message);
-        
-        // In a real app, you would integrate with:
-        // - Email: SendGrid, Mailgun, AWS SES
-        // - SMS: Twilio, AWS SNS
-        
-        // Simulate success (90% success rate)
-        if (Math.random() > 0.1) {
-          await this.markAsSent(notification.id);
-          console.log(`✅ Notification ${notification.id} sent successfully`);
-        } else {
-          await this.markAsFailed(notification.id);
-          console.log(`❌ Notification ${notification.id} failed to send`);
-        }
-      } catch (error) {
-        console.error(`Error processing notification ${notification.id}:`, error);
-        await this.markAsFailed(notification.id);
+    try {
+      const pending = await this.getPending();
+      
+      if (pending.length === 0) {
+        return;
       }
+    
+      for (const notification of pending) {
+        try {
+          // Simulate email/SMS sending
+          console.log(`Sending ${notification.type}:`, notification.message);
+          
+          // In a real app, you would integrate with:
+          // - Email: SendGrid, Mailgun, AWS SES
+          // - SMS: Twilio, AWS SNS
+          
+          // Simulate success (90% success rate)
+          if (Math.random() > 0.1) {
+            await this.markAsSent(notification.id);
+            console.log(`✅ Notification ${notification.id} sent successfully`);
+          } else {
+            await this.markAsFailed(notification.id);
+            console.log(`❌ Notification ${notification.id} failed to send`);
+          }
+        } catch (error) {
+          console.error(`Error processing notification ${notification.id}:`, error);
+          await this.markAsFailed(notification.id);
+        }
+      }
+    } catch (error) {
       console.warn('⚠️ Notifications désactivées - Supabase non configuré');
-      return [];
     }
   }
 };
