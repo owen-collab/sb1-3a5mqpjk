@@ -3,6 +3,7 @@
 
  async function testConnection() {
   const { data, error } = await supabase.from('rendezvous').select('*').limit(1)
+ }
 -  const { data, error } = await supabase.from('your_table').select('*').limit(1)
 +  const { data, error } = await supabase.from('rendezvous').select('*').limit(1)
    if (error) {
