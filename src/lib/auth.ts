@@ -5,7 +5,6 @@ export interface UserProfile {
   id: string;
   nom: string;
   telephone: string;
-  email: string;
   created_at: string;
   updated_at: string;
 }
@@ -65,8 +64,7 @@ export const authService = {
           .insert({
             id: data.user.id,
             nom: userData.nom,
-            telephone: userData.telephone,
-            email: email
+            telephone: userData.telephone
           });
         
         if (profileError && !profileError.message.includes('duplicate key')) {
