@@ -19,13 +19,13 @@ export default function DebugAll() {
 
       // 1. Vérifier la connexion
       logs.push("\n--- Test connexion ---");
-      const { data: testData, error: testError } = await supabase.from("paiements").select("*").limit(1);
+      const { data: testData, error: testError } = await supabase.from("payments").select("*").limit(1);
       if (testError) {
         logs.push("Erreur de connexion: " + testError.message);
         setOutput(logs.join("\n"));
         return;
       }
-      logs.push("Connexion OK. Paiements lus: " + testData.length);
+      logs.push("Connexion OK. Payments lus: " + testData.length);
 
       // 2. Lister toutes les tables (via pg_catalog)
       logs.push("\n--- Liste des tables ---");
@@ -37,10 +37,10 @@ export default function DebugAll() {
         logs.push("Tables disponibles: " + JSON.stringify(tables));
       }
 
-      // 3. Colonnes de rendez_vous
-      logs.push("\n--- Colonnes de rendez_vous ---");
+      // 3. Colonnes de rendezvous
+      logs.push("\n--- Colonnes de rendezvous ---");
       const { data: columns, error: columnsError } = await supabase
-        .from("rendez_vous")
+        .from("rendezvous")
         .select("*")
         .limit(0);
       if (columnsError) {
@@ -52,7 +52,7 @@ export default function DebugAll() {
       // 4. Test d'insertion
       logs.push("\n--- Test d'insertion ---");
       const { data: insertData, error: insertError } = await supabase
-        .from("rendez_vous")
+        .from("rendezvous")
         .insert([{ client: "Debug All", date: new Date() }])
         .select();
 
@@ -62,32 +62,32 @@ export default function DebugAll() {
         logs.push("Insertion OK: " + JSON.stringify(insertData));
       }
 
-      // 5. Lecture des derniers rendez-vous
-      logs.push("\n--- Rendez-vous ---");
+      // 5. Lecture des derniers rendezvous
+      logs.push("\n--- Rendezvous ---");
       const { data: rdvs, error: rdvError } = await supabase
-        .from("rendez_vous")
+        .from("rendezvous")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(5);
 
       if (rdvError) {
-        logs.push("Erreur lecture rendez_vous: " + rdvError.message);
+        logs.push("Erreur lecture rendezvous: " + rdvError.message);
       } else {
-        logs.push("Derniers rendez-vous: " + JSON.stringify(rdvs));
+        logs.push("Derniers rendezvous: " + JSON.stringify(rdvs));
       }
 
       // 6. Lecture des derniers paiements
       logs.push("\n--- Paiements ---");
       const { data: pays, error: payError } = await supabase
-        .from("paiements")
+        .from("payments")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(5);
 
       if (payError) {
-        logs.push("Erreur lecture paiements: " + payError.message);
+        logs.push("Erreur lecture payments: " + payError.message);
       } else {
-        logs.push("Derniers paiements: " + JSON.stringify(pays));
+        logs.push("Derniers payments: " + JSON.stringify(pays));
       }
 
       setOutput(logs.join("\n"));
