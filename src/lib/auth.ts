@@ -24,6 +24,9 @@ export const authService = {
     
     try {
       console.log('🔍 Tentative d\'inscription pour:', email);
+      console.log('🔍 Données utilisateur:', userData);
+      console.log('🔍 Supabase URL:', import.meta.env.VITE_SUPABASE_URL);
+      console.log('🔍 Supabase Key présente:', !!import.meta.env.VITE_SUPABASE_ANON_KEY);
       
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -39,6 +42,9 @@ export const authService = {
       
       if (error) {
         console.error('Erreur Supabase lors de l\'inscription:', error);
+        console.error('Code d\'erreur:', error.status);
+        console.error('Message détaillé:', error.message);
+        console.error('Détails complets:', JSON.stringify(error, null, 2));
         
         if (error.message.includes('User already registered')) {
           throw new Error('Un compte existe déjà avec cette adresse email');
@@ -46,6 +52,8 @@ export const authService = {
           throw new Error('Adresse email invalide');
         } else if (error.message.includes('Password')) {
           throw new Error('Le mot de passe ne respecte pas les critères requis');
+        } else if (error.message.includes('Database error')) {
+          throw new Error('Erreur de base de données. Vérifiez que les tables sont créées correctement.');
         } else {
           throw new Error(`Erreur d'inscription: ${error.message}`);
         }
@@ -56,9 +64,11 @@ export const authService = {
       }
       
       console.log('✅ Inscription réussie pour:', email);
+      console.log('✅ Utilisateur créé:', data.user.id);
       
       // Créer le profil utilisateur manuellement si nécessaire
       try {
+        console.log('🔍 Tentative de création du profil...');
         const { error: profileError } = await supabase
           .from('profiles')
           .insert({
@@ -69,14 +79,20 @@ export const authService = {
         
         if (profileError && !profileError.message.includes('duplicate key')) {
           console.warn('Avertissement lors de la création du profil:', profileError);
+          console.warn('Détails profil error:', JSON.stringify(profileError, null, 2));
+        } else {
+          console.log('✅ Profil créé avec succès');
         }
       } catch (profileError) {
         console.warn('Erreur lors de la création du profil (peut être normal):', profileError);
+        console.warn('Détails catch profil:', JSON.stringify(profileError, null, 2));
       }
       
       return data;
     } catch (error: any) {
       console.error('Erreur lors de l\'inscription:', error);
+      console.error('Type d\'erreur:', typeof error);
+      console.error('Stack trace:', error.stack);
       throw error;
     }
   },

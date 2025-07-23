@@ -56,7 +56,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
     }
 
     try {
+      console.log('🔍 Début de la soumission du formulaire');
+      console.log('🔍 Mode:', mode);
+      console.log('🔍 Email:', formData.email);
+      console.log('🔍 Nom:', formData.nom);
+      console.log('🔍 Téléphone:', formData.telephone);
+      
       if (mode === 'signup') {
+        console.log('🔍 Appel de authService.signUp...');
         await authService.signUp(formData.email, formData.password, {
           nom: formData.nom,
           telephone: formData.telephone
@@ -71,6 +78,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
           telephone: ''
         });
       } else {
+        console.log('🔍 Appel de authService.signIn...');
         await authService.signIn(formData.email, formData.password);
         setSuccess('Connexion réussie !');
         setTimeout(() => {
@@ -87,6 +95,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
       }
     } catch (err: any) {
       console.error('Erreur d\'authentification:', err);
+      console.error('Type d\'erreur auth:', typeof err);
+      console.error('Message d\'erreur auth:', err.message);
+      console.error('Stack trace auth:', err.stack);
       
       // Messages d'erreur plus explicites
       let errorMessage = 'Une erreur est survenue';
@@ -102,6 +113,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onAuthSuccess })
           errorMessage = 'Erreur de base de données. Veuillez vérifier votre configuration Supabase.';
         } else if (err.message.includes('Failed to fetch')) {
           errorMessage = 'Impossible de se connecter au serveur. Vérifiez votre connexion internet.';
+        } else if (err.message.includes('Supabase non configuré')) {
+          errorMessage = 'Configuration Supabase manquante. Vérifiez vos variables d\'environnement.';
         } else {
           errorMessage = err.message;
         }
