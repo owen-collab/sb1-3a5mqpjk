@@ -17,6 +17,7 @@ import AuthModal from './components/AuthModal';
 import UserDashboard from './components/UserDashboard';
 import { authService, AuthUser } from './lib/auth';
 import { notificationService } from './lib/notifications';
+import { supabase } from './lib/supabase';
 
 function App() {
   const [user, setUser] = useState<AuthUser | null>(null);
