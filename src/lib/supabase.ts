@@ -20,60 +20,27 @@ export interface RendezVous {
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Validation des variables d'environnement
-const validateSupabaseConfig = () => {
-  const errors = [];
-  
-  if (!supabaseUrl) {
-    console.warn('⚠️ VITE_SUPABASE_URL est manquant - fonctionnalités limitées');
-  } else if (!supabaseUrl.includes('supabase.co')) {
-    console.warn('⚠️ VITE_SUPABASE_URL semble invalide (doit contenir "supabase.co")');
-  }
-  
-  if (!supabaseKey) {
-    console.warn('⚠️ VITE_SUPABASE_ANON_KEY est manquant - fonctionnalités limitées');
-  } else if (supabaseKey.length < 100) {
-    console.warn('⚠️ VITE_SUPABASE_ANON_KEY semble invalide (trop court)');
-  }
-  
-  if (!supabaseUrl || !supabaseKey) {
-    console.info('ℹ️ Pour configurer Supabase:');
-    console.info('  1. Créez un fichier .env à la racine du projet');
-    console.info('  2. Ajoutez vos clés Supabase:');
-    console.info('     VITE_SUPABASE_URL=https://votre-projet.supabase.co');
-    console.info('     VITE_SUPABASE_ANON_KEY=votre_clé_anonyme');
-    console.info('  3. Redémarrez le serveur avec: npm run dev');
-    return false;
-  }
-  
-  console.info('✅ Configuration Supabase valide');
-  return true;
-};
-
 // Créer le client Supabase avec gestion d'erreurs
 let supabase: any = null;
 
-try {
-  if (supabaseUrl && supabaseKey && validateSupabaseConfig()) {
-    supabase = createClient(supabaseUrl!, supabaseKey!, {
+if (supabaseUrl && supabaseKey) {
+  try {
+    supabase = createClient(supabaseUrl, supabaseKey, {
       auth: {
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true
-      },
-      realtime: {
-        params: {
-          eventsPerSecond: 10
-        }
       }
     });
-    console.info('✅ Client Supabase initialisé avec succès');
-  } else {
-    console.info('ℹ️ Client Supabase non initialisé - variables d\'environnement manquantes');
+    console.log('✅ Supabase client initialized successfully');
+  } catch (error) {
+    console.error('❌ Error initializing Supabase client:', error);
+    supabase = null;
   }
-} catch (error) {
-  console.warn('⚠️ Erreur lors de l\'initialisation du client Supabase:', error);
-  supabase = null;
+} else {
+  console.warn('⚠️ Supabase environment variables missing');
+  console.warn('VITE_SUPABASE_URL:', supabaseUrl ? 'Present' : 'Missing');
+  console.warn('VITE_SUPABASE_ANON_KEY:', supabaseKey ? 'Present' : 'Missing');
 }
 
 export { supabase };
