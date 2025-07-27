@@ -51,6 +51,10 @@ const Contact: React.FC<ContactProps> = ({ user }) => {
     setErrorMessage('');
 
     try {
+      if (!supabase) {
+        throw new Error('Service temporairement indisponible. Veuillez réessayer plus tard.');
+      }
+      
       await rendezVousService.create({
         ...formData,
         user_id: user?.id || null

@@ -54,10 +54,16 @@ const AdminDashboard: React.FC = () => {
 
   const loadRendezVous = async () => {
     try {
+      if (!supabase) {
+        console.warn('Supabase client not initialized');
+        return;
+      }
       const data = await rendezVousService.getAll();
       setRendezVous(data || []);
     } catch (error) {
       console.error('Erreur lors du chargement des rendez-vous:', error);
+      // Set empty array to prevent infinite loading
+      setRendezVous([]);
     }
   };
 

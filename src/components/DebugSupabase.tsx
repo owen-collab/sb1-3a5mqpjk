@@ -29,11 +29,18 @@ const DebugSupabase: React.FC = () => {
       // 2. Test de connexion basique
       console.log('2️⃣ Test de connexion basique...');
       if (supabase) {
-        const connectionTest = await testSupabaseConnection();
-        results.connection = {
-          status: connectionTest ? 'SUCCÈS' : 'ERREUR',
-          connected: connectionTest
-        };
+        try {
+          const connectionTest = await testSupabaseConnection();
+          results.connection = {
+            status: connectionTest ? 'SUCCÈS' : 'ERREUR',
+            connected: connectionTest
+          };
+        } catch (error) {
+          results.connection = {
+            status: 'ERREUR',
+            error: error instanceof Error ? error.message : 'Erreur de connexion inconnue'
+          };
+        }
       } else {
         results.connection = {
           status: 'ERREUR',
