@@ -516,13 +516,13 @@ export default DebugSupabase;
 
 // Test d'insertion simple
 const { data, error } = await supabase
-  .from('rendez_vous')
+  .from('rendezvous')
   .insert([
     {
-      nom: 'Test Debug',
-      telephone: '+237600000000',
+      name: 'Test Debug',
+      phone: '+237600000000',
       service: 'test',
-      statut: 'nouveau'
+      status: 'nouveau'
     }
   ]);
 
