@@ -258,7 +258,7 @@ export const rendezVousService = {
       
       const { data, error } = await supabase
         .from('rendezvous')
-        .insert([dataToInsert])
+        .insert([mappedData])
         .select('id, name, phone, email, service, date, heure, message, user_id, created_at, updated_at, status, payment_status')
         .single();
       
@@ -278,8 +278,6 @@ export const rendezVousService = {
         heure: data.heure,
         message: data.message,
         user_id: data.user_id,
-        status: data.status,
-        payment_status: data.payment_status,
         status: data.status,
         payment_status: data.payment_status,
         created_at: data.created_at,
