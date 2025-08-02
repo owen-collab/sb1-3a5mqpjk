@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Shield, Award, Users, CheckCircle, AlertCircle } from 'lucide-react';
-import { rendezVousService } from '../lib/supabase';
+import { rendezVousService, supabase } from '../lib/supabase';
 import { AuthUser } from '../lib/auth';
 
 interface ContactProps {
