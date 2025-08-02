@@ -252,8 +252,8 @@ const DebugSupabase: React.FC = () => {
                         </div>
                         {event.data && (
                           <div className="text-sm text-gray-600">
-                            <strong>{event.data.nom}</strong> - {event.data.service}
-                            {event.data.telephone && ` (${event.data.telephone})`}
+                            <strong>{event.data.name || event.data.nom}</strong> - {event.data.service}
+                            {(event.data.phone || event.data.telephone) && ` (${event.data.phone || event.data.telephone})`}
                           </div>
                         )}
                       </div>
@@ -438,8 +438,8 @@ const DebugSupabase: React.FC = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {testResults.read.data.map((item: any, index: number) => (
                     <tr key={index}>
-                      <td className="px-4 py-2 text-sm text-gray-900">{item.nom}</td>
-                      <td className="px-4 py-2 text-sm text-gray-900">{item.telephone}</td>
+                      <td className="px-4 py-2 text-sm text-gray-900">{item.name || item.nom}</td>
+                      <td className="px-4 py-2 text-sm text-gray-900">{item.phone || item.telephone}</td>
                       <td className="px-4 py-2 text-sm text-gray-900">{item.service}</td>
                       <td className="px-4 py-2 text-sm text-gray-900">
                         <span className={`px-2 py-1 text-xs rounded-full ${
@@ -513,18 +513,3 @@ const DebugSupabase: React.FC = () => {
 };
 
 export default DebugSupabase;
-
-// Test d'insertion simple
-const { data, error } = await supabase
-  .from('rendezvous')
-  .insert([
-    {
-      name: 'Test Debug',
-      phone: '+237600000000',
-      service: 'test',
-      status: 'nouveau'
-    }
-  ]);
-
-console.log('Data:', data);
-console.log('Error:', error);

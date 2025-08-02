@@ -94,8 +94,8 @@ export const testSupabaseInsert = async (): Promise<boolean> => {
     console.log('🔍 Test d\'insertion en base...');
     
     const testData = {
-      nom: 'Test User',
-      telephone: '+237600000000',
+      name: 'Test User',
+      phone: '+237600000000',
       service: 'test',
       status: 'nouveau' as const,
       payment_status: 'pending' as const
