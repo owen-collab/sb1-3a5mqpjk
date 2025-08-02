@@ -197,7 +197,20 @@ export const rendezVousService = {
         throw new Error(`Erreur base de données: ${error.message}`);
       }
       
-      return data || [];
+      // Map English database columns to French field names
+      return (data || []).map((item: any) => ({
+        id: item.id,
+        nom: item.name,
+        telephone: item.phone,
+        email: item.email,
+        service: item.service,
+        date: item.date,
+        heure: item.heure,
+        message: item.message,
+        user_id: item.user_id,
+        created_at: item.created_at,
+        updated_at: item.updated_at
+      }));
     } catch (error) {
       console.error('Erreur réseau:', error);
       throw error;
@@ -210,13 +223,25 @@ export const rendezVousService = {
     }
     
     try {
+      // Map French field names to English database column names
+      const mappedData = {
+        name: rendezVous.nom,
+        phone: rendezVous.telephone,
+        email: rendezVous.email,
+        service: rendezVous.service,
+        date: rendezVous.date,
+        heure: rendezVous.heure,
+        message: rendezVous.message,
+        user_id: rendezVous.user_id
+      };
+      
       // Vérifier la limite de rendez-vous par créneau (maximum 3)
-      if (rendezVous.date && rendezVous.heure) {
+      if (mappedData.date && mappedData.heure) {
         const { count, error: countError } = await supabase
           .from('rendezvous')
           .select('*', { count: 'exact', head: true })
-          .eq('date', rendezVous.date)
-          .eq('heure', rendezVous.heure)
+          .eq('date', mappedData.date)
+          .eq('heure', mappedData.heure)
           .neq('status', 'annule'); // Exclure les rendez-vous annulés
         
         if (countError) {
@@ -231,7 +256,7 @@ export const rendezVousService = {
       
       const { data, error } = await supabase
         .from('rendezvous')
-        .insert([rendezVous])
+        .insert([mappedData])
         .select()
         .single();
       
@@ -240,7 +265,20 @@ export const rendezVousService = {
         throw new Error(`Erreur base de données: ${error.message}`);
       }
       
-      return data;
+      // Map back to French field names for the response
+      return {
+        id: data.id,
+        nom: data.name,
+        telephone: data.phone,
+        email: data.email,
+        service: data.service,
+        date: data.date,
+        heure: data.heure,
+        message: data.message,
+        user_id: data.user_id,
+        created_at: data.created_at,
+        updated_at: data.updated_at
+      };
     } catch (error) {
       console.error('Erreur lors de la création:', error);
       throw error;
