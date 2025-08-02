@@ -11,6 +11,8 @@ export interface RendezVous {
   heure?: string;
   message?: string;
   user_id?: string;
+  status: 'nouveau' | 'confirme' | 'en_cours' | 'termine' | 'annule';
+  payment_status: 'pending' | 'paid' | 'failed' | 'refunded';
   created_at: string;
   updated_at: string;
 }
@@ -256,8 +258,8 @@ export const rendezVousService = {
       
       const { data, error } = await supabase
         .from('rendezvous')
-        .insert([mappedData])
-        .select()
+        .insert([dataToInsert])
+        .select('id, name, phone, email, service, date, heure, message, user_id, created_at, updated_at, status, payment_status')
         .single();
       
       if (error) {
@@ -276,6 +278,10 @@ export const rendezVousService = {
         heure: data.heure,
         message: data.message,
         user_id: data.user_id,
+        status: data.status,
+        payment_status: data.payment_status,
+        status: data.status,
+        payment_status: data.payment_status,
         created_at: data.created_at,
         updated_at: data.updated_at
       };
@@ -295,7 +301,7 @@ export const rendezVousService = {
         .from('rendezvous')
         .update(updates)
         .eq('id', id)
-        .select()
+        .select('id, name, phone, email, service, date, heure, message, user_id, created_at, updated_at, status, payment_status')
         .single();
       
       if (error) {
