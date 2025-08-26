@@ -3,7 +3,7 @@ import { Phone, Shield, Clock, Wrench, CheckCircle, ArrowRight, Star, Calendar, 
 
 const Hero: React.FC = () => {
   return (
-    <section id="accueil" className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-red-600 text-white min-h-screen flex items-center">
+    <section id="accueil" className="relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-red-600 text-white min-h-screen flex items-center pt-20">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-red-500 rounded-full blur-3xl animate-pulse"></div>
@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
         <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white rounded-full blur-2xl animate-pulse delay-500"></div>
       </div>
 
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="hero-content space-y-8">
             {/* Badge Premium */}
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
               <Award className="h-4 w-4 ml-2 text-red-400" />
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+            <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
               <span className="block">Votre Expert</span>
               <span className="block bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
                 Automobile
@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
               <span className="block">de Confiance</span>
             </h1>
 
-            <p className="text-xl lg:text-2xl opacity-90 leading-relaxed max-w-2xl">
+            <p className="text-lg lg:text-xl opacity-90 leading-relaxed max-w-2xl">
               Depuis notre création, nous révolutionnons l'entretien automobile à Douala avec 
               <span className="font-semibold text-red-400"> une technologie de pointe</span>, 
               <span className="font-semibold text-white"> une transparence totale</span> et 

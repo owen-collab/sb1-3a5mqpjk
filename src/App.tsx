@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -68,10 +69,19 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement...</p>
+          <div className="relative">
+            <Loader2 className="h-16 w-16 animate-spin text-red-600 mx-auto mb-6" />
+            <div className="absolute inset-0 h-16 w-16 border-4 border-red-100 rounded-full mx-auto animate-pulse"></div>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">IN AUTO</h2>
+          <p className="text-gray-600 animate-pulse">Chargement de votre garage de confiance...</p>
+          <div className="mt-4 flex justify-center space-x-1">
+            <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+            <div className="w-2 h-2 bg-red-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+          </div>
         </div>
       </div>
     );
@@ -79,7 +89,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white decorative-lines">
+      <div className="min-h-screen bg-white">
         <Routes>
           {/* Page principale */}
           <Route path="/" element={
