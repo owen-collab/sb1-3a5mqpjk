@@ -75,12 +75,42 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Fallback si JavaScript ne fonctionne pas -->
     <noscript>
-      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-        <h1>JavaScript requis</h1>
-        <p>Cette application nécessite JavaScript pour fonctionner.</p>
+      <div style="
+        min-height: 100vh;
+        background: #1f2937;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      ">
+        <div>
+          <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #dc2626;">IN AUTO</h1>
+          <h2 style="margin-bottom: 1rem;">JavaScript requis</h2>
+          <p style="margin-bottom: 2rem; opacity: 0.8;">
+            Cette application nécessite JavaScript pour fonctionner.<br>
+            Veuillez activer JavaScript dans votre navigateur.
+          </p>
+          <div style="
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid #dc2626;
+            padding: 1.5rem;
+            border-radius: 12px;
+          ">
+            <h3 style="color: #dc2626; margin-bottom: 1rem;">📞 Contactez-nous directement</h3>
+            <p><strong>Téléphone:</strong> (+237) 675 978 777</p>
+            <p><strong>Adresse:</strong> Rue PAU, Akwa, Douala</p>
+            <p><strong>Email:</strong> infos@inauto.fr</p>
+          </div>
+        </div>
       </div>
     </noscript>
+    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

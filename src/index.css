@@ -12,13 +12,15 @@
 html, body {
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
 }
 
 #root {
   height: 100%;
   width: 100%;
   min-height: 100vh;
+  /* Assurer que le root est visible */
+  display: block;
+  position: relative;
 }
 
 /* Styles de base pour assurer l'affichage */
@@ -29,6 +31,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #ffffff;
   color: #1f2937;
+  /* Forcer l'affichage */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Test de visibilité - si vous voyez un fond rouge, CSS fonctionne */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: red;
+  z-index: 9999;
 }
 
 /* Styles de fallback si Tailwind ne charge pas */
