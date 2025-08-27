@@ -1,427 +1,167 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 
-// Import components with error handling
-let Header, Hero, Services, About, Stats, Testimonials, Contact, Footer, Blog, Chatbot;
-let AdminDashboard, DebugSupabase, AuthModal, UserDashboard;
-let authService, notificationService, supabase;
+// Import components
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Services from './components/Services';
+import About from './components/About';
+import Stats from './components/Stats';
+import Testimonials from './components/Testimonials';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Blog from './components/Blog';
+import Chatbot from './components/Chatbot';
+import AdminDashboard from './components/AdminDashboard';
+import DebugSupabase from './components/DebugSupabase';
+import AuthModal from './components/AuthModal';
+import UserDashboard from './components/UserDashboard';
 
-try {
-  Header = require('./components/Header').default;
-  Hero = require('./components/Hero').default;
-  Services = require('./components/Services').default;
-  About = require('./components/About').default;
-  Stats = require('./components/Stats').default;
-  Testimonials = require('./components/Testimonials').default;
-  Contact = require('./components/Contact').default;
-  Footer = require('./components/Footer').default;
-  Blog = require('./components/Blog').default;
-  Chatbot = require('./components/Chatbot').default;
-  AdminDashboard = require('./components/AdminDashboard').default;
-  DebugSupabase = require('./components/DebugSupabase').default;
-  AuthModal = require('./components/AuthModal').default;
-  UserDashboard = require('./components/UserDashboard').default;
-  
-  const authModule = require('./lib/auth');
-  authService = authModule.authService;
-  
-  const notificationModule = require('./lib/notifications');
-  notificationService = notificationModule.notificationService;
-  
-  const supabaseModule = require('./lib/supabase');
-  supabase = supabaseModule.supabase;
-} catch (error) {
-  console.error('Error loading components:', error);
-}
+// Import services
+import { authService, AuthUser } from './lib/auth';
+import { notificationService } from './lib/notifications';
+import { supabase } from './lib/supabase';
 
-// Simple fallback component
-const SimpleApp = () => {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f9fafb',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      {/* Header */}
-      <header style={{
-        backgroundColor: '#1f2937',
-        color: 'white',
-        padding: '1rem 0',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 1rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            background: 'linear-gradient(45deg, #ffffff, #dc2626)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            IN AUTO
-          </div>
-          <nav style={{ display: 'flex', gap: '2rem' }}>
-            <a href="#accueil" style={{ color: 'white', textDecoration: 'none' }}>Accueil</a>
-            <a href="#services" style={{ color: 'white', textDecoration: 'none' }}>Services</a>
-            <a href="#contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</a>
-          </nav>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section id="accueil" style={{
-        background: 'linear-gradient(135deg, #1f2937 0%, #dc2626 100%)',
-        color: 'white',
-        padding: '4rem 1rem',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-            lineHeight: '1.2'
-          }}>
-            Votre Expert Automobile de Confiance
-          </h1>
-          <p style={{
-            fontSize: '1.25rem',
-            marginBottom: '2rem',
-            opacity: 0.9
-          }}>
-            Garage professionnel à Douala - Diagnostic, entretien et réparation toutes marques
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a
-              href="#contact"
-              style={{
-                backgroundColor: '#dc2626',
-                color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                display: 'inline-block',
-                transition: 'transform 0.2s'
-              }}
-              onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
-            >
-              Prendre Rendez-vous
-            </a>
-            <a
-              href="tel:+237675978777"
-              style={{
-                backgroundColor: 'transparent',
-                color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                border: '2px solid white',
-                display: 'inline-block',
-                transition: 'all 0.2s'
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = 'white';
-                e.target.style.color = '#1f2937';
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'white';
-              }}
-            >
-              (+237) 675 978 777
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" style={{
-        padding: '4rem 1rem',
-        backgroundColor: 'white'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginBottom: '3rem',
-            color: '#1f2937'
-          }}>
-            Nos Services
-          </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
-          }}>
-            {[
-              { title: 'Diagnostic Électronique', price: '15 000 FCFA', desc: 'Diagnostic complet avec valise professionnelle' },
-              { title: 'Vidange + Entretien', price: '35 000 FCFA', desc: 'Vidange complète avec huile de qualité' },
-              { title: 'Climatisation', price: '25 000 FCFA', desc: 'Entretien et réparation système de climatisation' },
-              { title: 'Freinage', price: '45 000 FCFA', desc: 'Contrôle et réparation système de freinage' },
-              { title: 'Pneus + Géométrie', price: '15 000 FCFA', desc: 'Montage, équilibrage et géométrie' },
-              { title: 'Révision Complète', price: '75 000 FCFA', desc: 'Révision selon carnet constructeur' }
-            ].map((service, index) => (
-              <div key={index} style={{
-                backgroundColor: 'white',
-                padding: '2rem',
-                borderRadius: '12px',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                border: '1px solid #e5e7eb',
-                transition: 'transform 0.2s, box-shadow 0.2s'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-              }}>
-                <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 'bold',
-                  marginBottom: '0.5rem',
-                  color: '#1f2937'
-                }}>
-                  {service.title}
-                </h3>
-                <p style={{
-                  color: '#6b7280',
-                  marginBottom: '1rem',
-                  fontSize: '0.875rem'
-                }}>
-                  {service.desc}
-                </p>
-                <div style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 'bold',
-                  color: '#dc2626',
-                  marginBottom: '1rem'
-                }}>
-                  {service.price}
-                </div>
-                <a
-                  href="#contact"
-                  style={{
-                    backgroundColor: '#dc2626',
-                    color: 'white',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontSize: '0.875rem',
-                    fontWeight: 'bold',
-                    display: 'inline-block',
-                    transition: 'background-color 0.2s'
-                  }}
-                  onMouseOver={(e) => e.target.style.backgroundColor = '#b91c1c'}
-                  onMouseOut={(e) => e.target.style.backgroundColor = '#dc2626'}
-                >
-                  Réserver
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" style={{
-        padding: '4rem 1rem',
-        backgroundColor: '#f9fafb'
-      }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            marginBottom: '2rem',
-            color: '#1f2937'
-          }}>
-            Contactez-nous
-          </h2>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '2rem',
-            borderRadius: '12px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            marginBottom: '2rem'
-          }}>
-            <div style={{ marginBottom: '1rem' }}>
-              <strong>📍 Adresse :</strong> Rue PAU, Akwa, Douala
-            </div>
-            <div style={{ marginBottom: '1rem' }}>
-              <strong>📞 Téléphone :</strong> (+237) 675 978 777
-            </div>
-            <div style={{ marginBottom: '1rem' }}>
-              <strong>✉️ Email :</strong> infos@inauto.fr
-            </div>
-            <div>
-              <strong>🕒 Horaires :</strong> Lun-Sam: 8h00-18h00
-            </div>
-          </div>
-          <a
-            href="tel:+237675978777"
-            style={{
-              backgroundColor: '#dc2626',
-              color: 'white',
-              padding: '1rem 2rem',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontWeight: 'bold',
-              fontSize: '1.125rem',
-              display: 'inline-block',
-              transition: 'transform 0.2s'
-            }}
-            onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
-            onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
-          >
-            Appeler Maintenant
-          </a>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{
-        backgroundColor: '#1f2937',
-        color: 'white',
-        padding: '2rem 1rem',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem'
-          }}>
-            IN AUTO
-          </div>
-          <p style={{ opacity: 0.8, marginBottom: '1rem' }}>
-            Votre partenaire automobile de confiance à Douala
-          </p>
-          <p style={{ fontSize: '0.875rem', opacity: 0.6 }}>
-            © 2025 IN AUTO. Tous droits réservés.
-          </p>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-// Main App component with error handling
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     console.log('🔄 App useEffect running...');
-    
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-      console.log('✅ App loaded successfully');
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    initializeApp();
   }, []);
 
-  // If components failed to load, show simple app
-  if (!Header || !Hero || !Services) {
-    console.log('⚠️ Some components failed to load, showing simple app');
-    return <SimpleApp />;
-  }
+  const initializeApp = async () => {
+    try {
+      // Check for existing user session
+      const currentUser = await authService.getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+        console.log('✅ User session restored:', currentUser.email);
+      }
 
+      // Set up auth state listener
+      if (supabase) {
+        supabase.auth.onAuthStateChange(async (event, session) => {
+          console.log('🔄 Auth state changed:', event);
+          
+          if (event === 'SIGNED_IN' && session?.user) {
+            const userData = await authService.getCurrentUser();
+            setUser(userData);
+          } else if (event === 'SIGNED_OUT') {
+            setUser(null);
+          }
+        });
+      }
+
+      // Start notification processing (if configured)
+      if (supabase) {
+        // Process notifications every 30 seconds
+        const notificationInterval = setInterval(() => {
+          notificationService.processNotifications().catch(console.warn);
+        }, 30000);
+
+        // Cleanup interval on unmount
+        return () => clearInterval(notificationInterval);
+      }
+
+    } catch (err) {
+      console.error('❌ Error initializing app:', err);
+      setError('Erreur lors de l\'initialisation de l\'application');
+    } finally {
+      setLoading(false);
+      console.log('✅ App initialized successfully');
+    }
+  };
+
+  const handleAuthSuccess = async () => {
+    try {
+      const currentUser = await authService.getCurrentUser();
+      setUser(currentUser);
+      setShowAuthModal(false);
+      console.log('✅ Authentication successful');
+    } catch (err) {
+      console.error('❌ Error after auth success:', err);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await authService.signOut();
+      setUser(null);
+      console.log('✅ User signed out successfully');
+    } catch (err) {
+      console.error('❌ Error signing out:', err);
+    }
+  };
+
+  // Loading state
   if (loading) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        backgroundColor: '#f3f4f6',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ position: 'relative', marginBottom: '2rem' }}>
-            <Loader2 style={{
-              width: '4rem',
-              height: '4rem',
-              color: '#dc2626',
-              animation: 'spin 1s linear infinite'
-            }} />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="relative mb-8">
+            <Loader2 className="w-16 h-16 text-red-600 animate-spin mx-auto" />
+            <div className="absolute inset-0 w-16 h-16 border-4 border-red-100 rounded-full mx-auto"></div>
           </div>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#1f2937',
-            marginBottom: '0.5rem'
-          }}>
-            IN AUTO
-          </h2>
-          <p style={{ color: '#6b7280' }}>
-            Chargement de votre garage de confiance...
-          </p>
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-black to-red-600 bg-clip-text text-transparent">
+              IN AUTO
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Chargement de votre garage de confiance...
+            </p>
+            <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
+  // Error state
   if (error) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        backgroundColor: '#f3f4f6',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <div style={{ textAlign: 'center', padding: '2rem' }}>
-          <h1 style={{ color: '#dc2626', marginBottom: '1rem' }}>Erreur</h1>
-          <p style={{ marginBottom: '1rem' }}>{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">Erreur</h1>
+          <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            style={{
-              backgroundColor: '#dc2626',
-              color: 'white',
-              padding: '0.75rem 1.5rem',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer'
-            }}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
           >
-            Recharger
+            Recharger la page
           </button>
         </div>
       </div>
     );
   }
 
-  try {
-    return (
-      <Router>
-        <div style={{ minHeight: '100vh', backgroundColor: 'white' }}>
-          <Routes>
-            <Route path="/" element={
-              <>
-                <Header 
-                  user={user} 
-                  onShowAuth={() => setShowAuthModal(true)}
-                  onSignOut={() => setUser(null)}
-                />
+  // Main application
+  return (
+    <Router>
+      <div className="min-h-screen bg-white">
+        <Routes>
+          {/* Main website route */}
+          <Route path="/" element={
+            <>
+              <Header 
+                user={user} 
+                onShowAuth={() => setShowAuthModal(true)}
+                onSignOut={handleSignOut}
+              />
+              <main>
                 <Hero />
                 <Stats />
                 <Services />
@@ -429,40 +169,76 @@ function App() {
                 <Testimonials />
                 <Blog />
                 <Contact user={user} />
-                <Footer />
-                <Chatbot />
-              </>
-            } />
-            
-            <Route path="/dashboard" element={
-              user ? (
-                <UserDashboard user={user} onSignOut={() => setUser(null)} />
-              ) : (
-                <SimpleApp />
-              )
-            } />
-            
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/debug" element={<DebugSupabase />} />
-          </Routes>
+              </main>
+              <Footer />
+              <Chatbot />
+            </>
+          } />
           
-          {AuthModal && (
-            <AuthModal
-              isOpen={showAuthModal}
-              onClose={() => setShowAuthModal(false)}
-              onAuthSuccess={() => {
-                setShowAuthModal(false);
-                // Handle auth success
-              }}
-            />
-          )}
-        </div>
-      </Router>
-    );
-  } catch (error) {
-    console.error('💥 Error in main App render:', error);
-    return <SimpleApp />;
-  }
+          {/* User dashboard route */}
+          <Route path="/dashboard" element={
+            user ? (
+              <UserDashboard user={user} onSignOut={handleSignOut} />
+            ) : (
+              <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Connexion requise</h2>
+                  <p className="text-gray-600 mb-6">
+                    Vous devez être connecté pour accéder à votre espace client.
+                  </p>
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 w-full"
+                  >
+                    Se connecter
+                  </button>
+                </div>
+              </div>
+            )
+          } />
+          
+          {/* Admin dashboard route */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          
+          {/* Debug route */}
+          <Route path="/debug" element={<DebugSupabase />} />
+          
+          {/* 404 route */}
+          <Route path="*" element={
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-9xl font-bold text-gray-300 mb-4">404</div>
+                <h1 className="text-3xl font-bold text-gray-800 mb-4">Page non trouvée</h1>
+                <p className="text-gray-600 mb-8">
+                  La page que vous recherchez n'existe pas ou a été déplacée.
+                </p>
+                <a
+                  href="/"
+                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 inline-block"
+                >
+                  Retour à l'accueil
+                </a>
+              </div>
+            </div>
+          } />
+        </Routes>
+        
+        {/* Authentication Modal */}
+        {showAuthModal && (
+          <AuthModal
+            isOpen={showAuthModal}
+            onClose={() => setShowAuthModal(false)}
+            onAuthSuccess={handleAuthSuccess}
+          />
+        )}
+      </div>
+    </Router>
+  );
 }
 
 export default App;
